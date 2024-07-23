@@ -169,11 +169,6 @@ struct NewCardView: View {
                 hideKeyboard()
             }
         }
-       
-           
-       
-        
-      
     }
 }
 

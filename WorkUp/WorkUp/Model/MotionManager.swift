@@ -32,7 +32,7 @@ class MotionManager: ObservableObject {
     private func handleDeviceMotion(data: CMAccelerometerData) {
         let acceleration = data.acceleration
         DispatchQueue.main.async {
-            if acceleration.z > 0.8 {
+            if acceleration.z > 0.6 {
                 self.isDeviceFlipped = true
                 if self.flipStartTime == nil {
                     self.flipStartTime = Date()
