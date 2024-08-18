@@ -57,8 +57,11 @@ struct ListView: View {
 }
 
 struct ListCardCell: View {
-    var card: NewCard
-    var cardIndex: Int
+    @Environment(\.modelContext) var modelContext
+    @State private var showAlert = false
+
+    let card: NewCard
+    let cardIndex: Int
     
     var body: some View {
         VStack(alignment:.leading, spacing: 0) {
@@ -68,7 +71,7 @@ struct ListCardCell: View {
                     .padding(.leading, 14)
                 Spacer()
                 Button {
-                    //삭제코드
+                    showAlert = true
                 } label: {
                     Image(systemName: "trash")
                         .resizable()
@@ -76,6 +79,16 @@ struct ListCardCell: View {
                         .foregroundStyle(.white)
                         .frame(width: 20, height: 24)
                         .padding(.trailing, 14)
+                }
+                .alert(isPresented: $showAlert) {
+                    Alert(
+                        title: Text("카드를 삭제할까요?"),
+                        message: Text("삭제된 카드는 복구되지 않습니다."),
+                        primaryButton: .destructive(Text("삭제")) {
+                            modelContext.delete(card)
+                        },
+                        secondaryButton: .cancel(Text("취소"))
+                    )
                 }
             }
             .frame(height: 49)
