@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1E8EEE442C71E7610086B06F /* ListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E8EEE432C71E7610086B06F /* ListView.swift */; };
+		1E8EEE462C71FB4E0086B06F /* ListCardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E8EEE452C71FB4E0086B06F /* ListCardCell.swift */; };
 		E7D427D62C4D293D00485BB9 /* WorkUpApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D427D52C4D293D00485BB9 /* WorkUpApp.swift */; };
 		E7D427DA2C4D293E00485BB9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E7D427D92C4D293E00485BB9 /* Assets.xcassets */; };
 		E7D427DD2C4D293E00485BB9 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E7D427DC2C4D293E00485BB9 /* Preview Assets.xcassets */; };
@@ -26,6 +27,7 @@
 
 /* Begin PBXFileReference section */
 		1E8EEE432C71E7610086B06F /* ListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListView.swift; sourceTree = "<group>"; };
+		1E8EEE452C71FB4E0086B06F /* ListCardCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCardCell.swift; sourceTree = "<group>"; };
 		E7D427D22C4D293D00485BB9 /* WorkUp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WorkUp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E7D427D52C4D293D00485BB9 /* WorkUpApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkUpApp.swift; sourceTree = "<group>"; };
 		E7D427D92C4D293E00485BB9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -58,6 +60,7 @@
 			isa = PBXGroup;
 			children = (
 				1E8EEE432C71E7610086B06F /* ListView.swift */,
+				1E8EEE452C71FB4E0086B06F /* ListCardCell.swift */,
 			);
 			path = ListView;
 			sourceTree = "<group>";
@@ -213,6 +216,7 @@
 				E7D427FB2C4D3A9800485BB9 /* View+.swift in Sources */,
 				E7D427EE2C4D3A6300485BB9 /* CardDetailView.swift in Sources */,
 				E7D427EC2C4D3A6300485BB9 /* EmptyTestCardView.swift in Sources */,
+				1E8EEE462C71FB4E0086B06F /* ListCardCell.swift in Sources */,
 				E7D427D62C4D293D00485BB9 /* WorkUpApp.swift in Sources */,
 				E7D427EF2C4D3A6300485BB9 /* NewCardView.swift in Sources */,
 			);
