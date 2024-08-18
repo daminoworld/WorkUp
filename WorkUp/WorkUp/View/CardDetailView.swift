@@ -26,7 +26,7 @@ struct CardDetailView: View {
             if !motionManager.isDeviceFlipped{
                 ZStack{
                     Spacer()
-                    Image("arrow")
+                    Image("Arrow")
                         .resizable()
                         .scaledToFit()
                         .frame(width: 106, height: 106)
@@ -47,27 +47,36 @@ struct CardDetailView: View {
                         }
                     }
                 }
-                Text(isLastQuiz ? "모든 퀴즈가 끝났습니다" : "고개를 들어서 정답을 확인")
-                    .font(.system(size: 20, weight: .bold))
-                    .foregroundStyle(isLastQuiz ? Color("MainColor") :.white)
+                
+                if isLastQuiz {
+                    Text("모든 카드가 끝났습니다")
+                } else {
+                    Group {
+                        Text("고개를")
+                            .font(.system(size: 18, weight: .regular))
+                        + Text(" 들어서")
+                            .font(.system(size: 18, weight: .bold))
+                        + Text(" 내용을 확인")
+                            .font(.system(size: 18, weight: .regular))
+                            .foregroundStyle(isLastQuiz ? Color("MainColor") :.white)
+                    }
                     .padding(.bottom, 20)
-                    
+                  
+                }
             }
             card
                 .padding(.bottom, 55)
                 .animation(.easeInOut, value: motionManager.isDeviceFlipped)
-                .alert(isPresented: $showAlert) {
-                    Alert(title: Text("Title"), message: Text("This is a alert message"), dismissButton: .default(Text("Dismiss")))
-                }
-                .alert("현재 퀴즈를 삭제하시겠습니까?", isPresented: $showAlert) {
-                    Button("삭제", role: .destructive) {
-                        deleteCard()
-                    }
-                    Button("취소", role: .cancel) {
-                        showAlert = false
-                    }
-
-                }
+//                .alert(isPresented: $showAlert) {
+//                    Alert(title: Text("Title"), message: Text("This is a alert message"), dismissButton: .default(Text("Dismiss")))
+//                }
+//                .alert("현재 퀴즈를 삭제하시겠습니까?", isPresented: $showAlert) {
+//                    Button("삭제", role: .destructive) {
+//                        deleteCard()
+//                    }
+//                    Button("취소", role: .cancel) {
+//                        showAlert =
+//                }
             if !motionManager.isDeviceFlipped {
                 Button(action: {
                     if currentIndex < shuffledCardList.count - 1{
@@ -92,25 +101,20 @@ struct CardDetailView: View {
                 .disabled(isLastQuiz)
             } else if !motionManager.isDeviceFlippedFor5Seconds{
                 VStack{
-                    Text("정답 확인하기")
+                    Text("내용 확인하기")
                         .font(.system(size: 41, weight: .bold))
                         .padding(.bottom, 15)
-                    Text("퀴즈의 정답 확인을 위해\n고개를 든 상태로 유지해주세요.")
+                    Text("내용 확인을 위해 고개를 든 상태로\n5초간 유지해주세요.")
                         .font(.system(size: 20, weight: .semibold))
                         .multilineTextAlignment(.center)
                 }
                 .padding(.bottom, 70)
             } else {
-                VStack{
-                    Text("돌아가서 퀴즈를 확인")
-                        .font(.system(size: 20, weight: .bold))
-                        .padding(.bottom, 15)
-                    Image("arrow")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 106, height: 106)
-                        .rotationEffect(.degrees(180.0))
-                }
+                Image("Arrow")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 106, height: 106)
+                    .rotationEffect(.degrees(180.0))
             }
         }
         .padding()
@@ -147,39 +151,30 @@ struct CardDetailView: View {
     
     var quiz: some View {
         VStack{
-            HStack(alignment: .top){
-                Text(motionManager.isDeviceFlipped ? "A" : "Q")
-                    .font(.system(size: 50))
+            HStack{
+                Text(motionManager.isDeviceFlipped ? "Content" : "Title")
+                    .font(.system(size: 45))
                     .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
                     .foregroundStyle(.black)
-                    .padding(20)
                 Spacer()
-                Text("\(currentIndex + 1)/\(shuffledCardList.count)개")
-                    .font(.system(size: 15))
-                    .fontWeight(.regular)
-                    .foregroundStyle(.black)
-                    .padding()
+                Group {
+                    Text("\(currentIndex + 1)")
+                        .font(.system(size: 15, weight: .semibold))
+                        .foregroundStyle(motionManager.isDeviceFlipped ? .white : .black)
+                    + Text("/\(shuffledCardList.count)")
+                        .font(.system(size: 15, weight: .regular))
+                        .foregroundStyle(motionManager.isDeviceFlipped ? .white : Color("CardCount"))
+                }
             }
             Text("\(motionManager.isDeviceFlipped ? shuffledCardList[currentIndex].answer : shuffledCardList[currentIndex].question)")
-                .font(.system(size: 40))
-                .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
+                .font(.system(size: motionManager.isDeviceFlipped ? 20 : 38 , weight: .bold))
                 .foregroundStyle(.black)
+                .lineSpacing(motionManager.isDeviceFlipped ? 21 : 4)
+                .tracking(-0.4)
+                .padding(.top, 43)
             Spacer()
-            if motionManager.isDeviceFlippedFor5Seconds{
-                HStack{
-                    Spacer()
-                    Button {
-                        self.showAlert = true
-                    } label: {
-                        Image("Trash")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 36, height: 36)
-                    }
-                }
-                .padding()
-            }
         }
+        .padding(30)
  
     }
     
@@ -209,8 +204,8 @@ struct ProgressRingView: View {
                 .rotationEffect(Angle(degrees: 270.0))
                 .animation(.linear, value: progress / 5)
             Text(String(format: "%.0f", min(progress, 5.0)))
-                .font(.system(size: 100, weight: .black))
-                .foregroundColor(Color.white)
+                .font(.system(size: 110, weight: .bold))
+                .foregroundColor(Color.black)
         }
         .padding(40)
     }
