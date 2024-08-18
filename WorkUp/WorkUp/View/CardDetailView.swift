@@ -58,8 +58,8 @@ struct CardDetailView: View {
                             .font(.system(size: 18, weight: .bold))
                         + Text(" 내용을 확인")
                             .font(.system(size: 18, weight: .regular))
-                            .foregroundStyle(isLastQuiz ? Color("MainColor") :.white)
                     }
+                    .foregroundStyle(isLastQuiz ? Color("MainColor") :.white)
                     .padding(.bottom, 20)
                   
                 }
