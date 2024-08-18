@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1E8EEE442C71E7610086B06F /* ListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E8EEE432C71E7610086B06F /* ListView.swift */; };
 		E7D427D62C4D293D00485BB9 /* WorkUpApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D427D52C4D293D00485BB9 /* WorkUpApp.swift */; };
 		E7D427DA2C4D293E00485BB9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E7D427D92C4D293E00485BB9 /* Assets.xcassets */; };
 		E7D427DD2C4D293E00485BB9 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E7D427DC2C4D293E00485BB9 /* Preview Assets.xcassets */; };
@@ -24,6 +25,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1E8EEE432C71E7610086B06F /* ListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListView.swift; sourceTree = "<group>"; };
 		E7D427D22C4D293D00485BB9 /* WorkUp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WorkUp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E7D427D52C4D293D00485BB9 /* WorkUpApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkUpApp.swift; sourceTree = "<group>"; };
 		E7D427D92C4D293E00485BB9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -52,6 +54,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1E8EEE422C71E74F0086B06F /* ListView */ = {
+			isa = PBXGroup;
+			children = (
+				1E8EEE432C71E7610086B06F /* ListView.swift */,
+			);
+			path = ListView;
+			sourceTree = "<group>";
+		};
 		E7D427C92C4D293D00485BB9 = {
 			isa = PBXGroup;
 			children = (
@@ -98,6 +108,7 @@
 				E7D427EA2C4D3A6300485BB9 /* TestCardView.swift */,
 				E7D427E52C4D3A6200485BB9 /* TestInformationView.swift */,
 				E7D427E72C4D3A6200485BB9 /* TestMainView.swift */,
+				1E8EEE422C71E74F0086B06F /* ListView */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -192,6 +203,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E7D427F42C4D3A7400485BB9 /* NewCard.swift in Sources */,
+				1E8EEE442C71E7610086B06F /* ListView.swift in Sources */,
 				E7D427FA2C4D3A9800485BB9 /* Color+.swift in Sources */,
 				E7D427ED2C4D3A6300485BB9 /* TestMainView.swift in Sources */,
 				E7D427F92C4D3A9800485BB9 /* TextEditor+.swift in Sources */,

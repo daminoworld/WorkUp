@@ -62,6 +62,6 @@ struct TestMainView: View {
     }
 }
 
-//#Preview {
-//    TestMainView()
-//}
+#Preview {
+    TestMainView()
+}

@@ -41,15 +41,19 @@ struct TestCardView: View {
                 }
                 
                 NavigationLink {
-                    NewCardView()
+//                    NewCardView()
+                    ListView()
                 } label: {
                     RoundedRectangle(cornerRadius: 12)
                         .fill(Color(hex: "000000"))
                         .frame(width: 282, height: 47)
                         .overlay(alignment: .center) {
                             HStack {
-                                Image("AddQuiz")
-                                Text("퀴즈 만들기")
+                                Image("list")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(height: 20)
+                                Text("카드 목록")
                                     .font(.system(size: 20))
                                     .foregroundStyle(.white)
                                     .fontWeight(.semibold)
