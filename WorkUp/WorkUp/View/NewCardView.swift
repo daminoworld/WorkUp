@@ -11,16 +11,17 @@ import SwiftData
 
 struct NewCardView: View {
     @Environment(\.modelContext) var modelContext 
-    @State private var question = ""
-    @State private var answer = ""
+    @State var card: NewCard? = nil
+    @State var question = ""
+    @State var answer = ""
     @Environment(\.dismiss) private var dismiss
-    
     
     let limitCount = 100
     let buttonColor = Color(r: 83, g: 231, b: 251)
     let textfieldColor = Color(r: 35, g: 35, b: 35)
     let textlabelColor = Color(r: 82, g: 82, b: 82)
     let placeholderColor = Color(r: 100, g: 100, b: 100)
+    var isEdit = false
    
     var body: some View {
         
@@ -137,13 +138,19 @@ struct NewCardView: View {
                 Spacer()
                     .frame(height: 50)
                 
-                
                 Button {
-                    let newCard = NewCard(question: question, answer: answer)
-                    modelContext.insert(newCard)
+                    if isEdit {
+                        if let card {
+                            card.question = question
+                            card.answer = answer
+                        }
+                    } else {
+                        let newCard = NewCard(question: question, answer: answer)
+                        modelContext.insert(newCard)
+                    }
                     dismiss()
                 } label: {
-                    Text("문제 추가하기")
+                    Text(isEdit ? "카드 수정하기" : "카드 만들기")
                         .fontWeight(.semibold)
                         .frame(width: 354, height: 64)
                         .background(buttonColor)
@@ -169,11 +176,6 @@ struct NewCardView: View {
                 hideKeyboard()
             }
         }
-       
-           
-       
-        
-      
     }
 }
 
