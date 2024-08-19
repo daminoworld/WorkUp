@@ -18,38 +18,45 @@ struct CardDetailView: View {
     @State var currentIndex = 0
     @State var isLastQuiz = false
     @State var shuffledCardList: [NewCard] = Array(repeating: NewCard(question: "", answer: ""), count: 100)
-
+    @State private var dragOffset: CGSize = .zero // 드래그 오프셋 상태 변수
+    
     var body: some View {
-        VStack {
+        ZStack(alignment: .top) {
+            // TODO: 닫기 버튼 삭제 문의 필요
+//            VStack {
+//                HStack {
+//                    Spacer()
+//                    
+//                    Button(action: {
+//                        self.presentationMode.wrappedValue.dismiss()
+//                    }, label: {
+//                        Image(isLastQuiz ? "Activeclose" : "Close")
+//                            .resizable()
+//                            .scaledToFit()
+//                            .frame(width: 35, height: 35)
+//                    })
+//                    
+//                }
+//                Spacer()
+//            }
+            // ZStack 배경으로 전체 다 덮게 안하면 VStack 이 제대로 배치가 안됨
+            Color.black
+                .ignoresSafeArea(.all)
 
-            Spacer()
-            if !motionManager.isDeviceFlipped{
-                ZStack{
-                    Spacer()
+            VStack {
+                if !motionManager.isDeviceFlipped {
                     Image("Arrow")
                         .resizable()
                         .scaledToFit()
                         .frame(width: 106, height: 106)
                         .padding(.bottom, 20)
-                    Spacer()
-                    HStack{
-                        Spacer()
-                        VStack{
-                            Button(action: {
-                                self.presentationMode.wrappedValue.dismiss()
-                            }, label: {
-                                Image(isLastQuiz ? "Activeclose" : "Close")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 35, height: 35)
-                            })
-                            Spacer()
-                        }
-                    }
+                        
                 }
                 
                 if isLastQuiz {
                     Text("모든 카드가 끝났습니다")
+                        .foregroundStyle(isLastQuiz ? Color("MainColor") :.white)
+                        .padding(.bottom, 20)
                 } else {
                     Group {
                         Text("고개를")
@@ -61,81 +68,54 @@ struct CardDetailView: View {
                     }
                     .foregroundStyle(isLastQuiz ? Color("MainColor") :.white)
                     .padding(.bottom, 20)
-                  
+                    
+                }
+                
+                ZStack {
+                    Rectangle()
+                        .foregroundStyle(.gray.opacity(0.4))
+                        .clipShape(RoundedRectangle(cornerSize: CGSize(width: 20, height: 20)))
+                        .rotationEffect(.degrees(10))
+                        .offset(x: motionManager.isDeviceFlipped ? 60 : -60, y: motionManager.isDeviceFlipped ? -50 : 50)
+                        .frame(width: 315, height: 424)
+                    
+                    cardView
+                        .frame(width: 315, height: 424)
+                }
+                .padding(.top)
+                
+                if motionManager.isDeviceFlipped && !motionManager.isDeviceFlippedFor5Seconds {
+                    VStack {
+                        Text("내용 확인하기")
+                            .font(.system(size: 41, weight: .bold))
+                            .padding(.bottom, 15)
+                        Text("내용 확인을 위해 고개를 든 상태로\n5초간 유지해주세요.")
+                            .font(.system(size: 20, weight: .semibold))
+                            .multilineTextAlignment(.center)
+                    }
+                    .padding(.bottom, 70)
+                    
+                } else if motionManager.isDeviceFlipped && motionManager.isDeviceFlippedFor5Seconds {
+                    
+                    Image("Arrow")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 106, height: 106)
+                        .rotationEffect(.degrees(180.0))
                 }
             }
-            card
-                .padding(.bottom, 55)
-                .animation(.easeInOut, value: motionManager.isDeviceFlipped)
-//                .alert(isPresented: $showAlert) {
-//                    Alert(title: Text("Title"), message: Text("This is a alert message"), dismissButton: .default(Text("Dismiss")))
-//                }
-//                .alert("현재 퀴즈를 삭제하시겠습니까?", isPresented: $showAlert) {
-//                    Button("삭제", role: .destructive) {
-//                        deleteCard()
-//                    }
-//                    Button("취소", role: .cancel) {
-//                        showAlert =
-//                }
-            if !motionManager.isDeviceFlipped {
-                Button(action: {
-                    if currentIndex < shuffledCardList.count - 1{
-                        currentIndex += 1
-                        if currentIndex == shuffledCardList.count - 1{
-                            isLastQuiz = true
-                        }
-                    }
-                }, label: {
-                    HStack{
-                        Spacer()
-                        Text("다음")
-                            .font(.system(size: 20, weight: .bold))
-                            .foregroundStyle(.black)
-                        Spacer()
-                    }
-                    .frame(height: 64)
-                    .background(isLastQuiz ? Color("DisabledColor") : Color("MainColor"))
-                    .clipShape(RoundedRectangle(cornerRadius: 12))
-                    .padding(.bottom, 50)
-                })
-                .disabled(isLastQuiz)
-            } else if !motionManager.isDeviceFlippedFor5Seconds{
-                VStack{
-                    Text("내용 확인하기")
-                        .font(.system(size: 41, weight: .bold))
-                        .padding(.bottom, 15)
-                    Text("내용 확인을 위해 고개를 든 상태로\n5초간 유지해주세요.")
-                        .font(.system(size: 20, weight: .semibold))
-                        .multilineTextAlignment(.center)
+            .navigationBarBackButtonHidden(true)
+            .onAppear {
+                if shuffledCardList.count == 1{
+                    isLastQuiz = true
                 }
-                .padding(.bottom, 70)
-            } else {
-                Image("Arrow")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 106, height: 106)
-                    .rotationEffect(.degrees(180.0))
             }
         }
-        .padding()
-        .background(.black)
-        .navigationBarBackButtonHidden(true)
-        .onAppear(perform: {
-            if shuffledCardList.count == 1{
-                isLastQuiz = true
-            }
-        })
         
     }
     
-    var card: some View {
-        
+    var cardView: some View {
         ZStack{
-            Rectangle()
-                .foregroundStyle(.gray.opacity(0.4))
-                .clipShape(RoundedRectangle(cornerSize: CGSize(width: 20, height: 20)))
-                .rotationEffect(.degrees(10))
-                .offset(x: motionManager.isDeviceFlipped ? 60 :-40, y: motionManager.isDeviceFlipped ? -50 : 20)
             Rectangle()
                 .foregroundStyle(motionManager.isDeviceFlipped ? Color("MainColor") : .white)
                 .clipShape(RoundedRectangle(cornerSize: CGSize(width: 20, height: 20)))
@@ -143,13 +123,45 @@ struct CardDetailView: View {
             if motionManager.isDeviceFlipped && !motionManager.isDeviceFlippedFor5Seconds{
                 ProgressRingView(progress: $motionManager.timeIntervalSince)
             } else {
-                quiz
+                cardContentView
             }
         }
-        .frame(width: 315, height: 424)
+        .offset(CGSize(width: dragOffset.width, height: 0))
+        .rotationEffect(.degrees(Double(dragOffset.width) * -0.1))
+        .animation(.easeInOut, value: motionManager.isDeviceFlipped)
+        .gesture(
+            // 왼쪽으로 스와이프 감지
+            DragGesture(minimumDistance: 20)
+                .onChanged { value in
+                    // 드래그할 때의 위치 업데이트
+                    self.dragOffset = value.translation
+                }
+                .onEnded { value in
+                    if value.translation.width < 0 {
+                        if currentIndex < shuffledCardList.count - 1{
+                            currentIndex += 1
+                            if currentIndex == shuffledCardList.count - 1{
+                                isLastQuiz = true
+                            }
+                        }
+                    }
+                    // 오른쪽으로 스와이프 감지
+                    if value.translation.width > 0 {
+                        if currentIndex > 0 {
+                            currentIndex -= 1
+                        }
+                        if isLastQuiz {
+                            isLastQuiz = false
+                        }
+                    }
+                    
+                    self.dragOffset = .zero
+                }
+        )
     }
     
-    var quiz: some View {
+    // 카드 내부 내용
+    var cardContentView: some View {
         VStack{
             HStack{
                 Text(motionManager.isDeviceFlipped ? "Content" : "Title")
@@ -175,7 +187,6 @@ struct CardDetailView: View {
             Spacer()
         }
         .padding(30)
- 
     }
     
     private func deleteCard(){
