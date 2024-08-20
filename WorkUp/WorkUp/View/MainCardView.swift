@@ -70,7 +70,7 @@ struct MainCardView: View {
                         }
                 }
                 .padding(.top, 12)
-                .padding(.bottom, 36)
+                .padding(.bottom, 19)
             }
         }
         .frame(width: 315, height: 425)
