@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct TestCardView: View {
+struct MainCardView: View {
     var shuffledCardList: [NewCard] = []
     var body: some View {
         ZStack {
@@ -71,5 +71,5 @@ struct TestCardView: View {
 }
 
 #Preview {
-    TestCardView()
+    MainCardView()
 }
