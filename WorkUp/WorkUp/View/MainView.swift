@@ -41,7 +41,7 @@ struct MainView: View {
                     Spacer()
                     
                     if newCards.isEmpty {
-                        EmptyTestCardView()
+                        EmptyCardView()
                     }else {
                         MainCardView(shuffledCardList: shuffledCardList())
                     }

@@ -7,28 +7,27 @@
 
 import SwiftUI
 
-struct EmptyTestCardView: View {
+struct EmptyCardView: View {
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 13)
                 .fill(Color(hex: "232323"))           
             
             VStack(spacing: 0) {
-               Text("어서오세요!")
-                .font(.system(size: 40))
-                .fontWeight(.bold)
-                .foregroundColor(.white)
-                .padding(.top, 33)
-                
-                Text("퀴즈를 만들며 스트레칭 해보세요")
-                    .font(.system(size: 18))
-                    .fontWeight(.semibold)
+                Text("어서오세요")
                     .foregroundColor(.white)
-                    .padding(.top, 10)
+                    .font(.system(size: 40))
+                    .fontWeight(.bold)
+                    .padding(.top, 41)
                 
-                Image("EmptyTestCard")
-                    .padding(.top, 27)
-                    .padding(.bottom, 40)
+                Text("첫 카드를 만들어 볼까요?")
+                    .foregroundColor(.white)
+                    .font(.system(size: 18))
+                    .fontWeight(.bold)
+                    .padding(.top, 5)
+                
+                Image("MainCardImage")
+                    .padding(.top, 25)
                 
                 NavigationLink {
                     NewCardView()
@@ -43,7 +42,8 @@ struct EmptyTestCardView: View {
                                 .fontWeight(.semibold)
                         }
                 }
-                .padding(.bottom, 20)
+                .padding(.top, 40)
+                .padding(.bottom, 27)
             }
             .background(Color(hex: "232323"))
         }
@@ -53,5 +53,5 @@ struct EmptyTestCardView: View {
 }
 
 #Preview {
-    EmptyTestCardView()
+    EmptyCardView()
 }
