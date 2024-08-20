@@ -8,7 +8,7 @@
 import SwiftUI
 import SwiftData
 
-struct TestMainView: View {
+struct MainView: View {
     @Environment(\.modelContext) private var modelContext
     @Query var newCards: [NewCard]
     
@@ -31,7 +31,7 @@ struct TestMainView: View {
                             }
                         
                         NavigationLink {
-                            TestInformationView()
+                            MainInfoView()
                         } label: {
                             Image("Info")
                         }
@@ -41,9 +41,9 @@ struct TestMainView: View {
                     Spacer()
                     
                     if newCards.isEmpty {
-                        EmptyTestCardView()
+                        EmptyCardView()
                     }else {
-                        TestCardView(shuffledCardList: shuffledCardList())
+                        MainCardView(shuffledCardList: shuffledCardList())
                     }
                     Spacer()
                 }
@@ -63,5 +63,5 @@ struct TestMainView: View {
 }
 
 #Preview {
-    TestMainView()
+    MainView()
 }

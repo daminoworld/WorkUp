@@ -33,7 +33,7 @@ struct NewCardView: View {
                     .frame(height: 125)
                 VStack(alignment:.leading) {
                     VStack(alignment: .leading, spacing: 15){
-                        Text("퀴즈를")
+                        Text("카드를")
                             .foregroundColor(buttonColor)
                             .font(.system(size: 40))
                             .fontWeight(.bold)
@@ -48,11 +48,11 @@ struct NewCardView: View {
                     
                     VStack{
                         HStack {
-                            Text("퀴즈")
+                            Text("카드")
                                 .foregroundColor(textlabelColor)
                                 .font(.system(size: 20))
                                 .fontWeight(.bold)
-                            + Text("문제")
+                            + Text("제목")
                                 .foregroundColor(buttonColor)
                                 .font(.system(size: 20))
                                 .fontWeight(.bold)
@@ -92,11 +92,11 @@ struct NewCardView: View {
                     
                     VStack {
                         HStack {
-                            Text("퀴즈")
+                            Text("카드")
                                 .foregroundColor(textlabelColor)
                                 .font(.system(size: 20))
                                 .fontWeight(.bold)
-                            + Text("정답")
+                            + Text("내용")
                                 .foregroundColor(buttonColor)
                                 .font(.system(size: 20))
                                 .fontWeight(.bold)
@@ -107,7 +107,7 @@ struct NewCardView: View {
                         }
                         .padding(.leading, 10)
                         ZStack(alignment: .topLeading) {
-                            let placeholder: String = "정답을 작성해 주세요"
+                            let placeholder: String = "내용을 작성해 주세요 \n무엇을 기억하고 싶나요?"
                         
                         TextEditor(text: $answer)
                             .maxLength(text: $answer, limitCount)

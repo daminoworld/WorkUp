@@ -68,7 +68,6 @@ struct CardDetailView: View {
                     }
                     .foregroundStyle(isLastQuiz ? Color("MainColor") :.white)
                     .padding(.bottom, 20)
-                    
                 }
                 
                 ZStack {

@@ -23,7 +23,7 @@ struct WorkUpApp: App {
     
     var body: some Scene {
         WindowGroup {
-            TestMainView()
+            MainView()
                 .modelContainer(modelContainer)
         }
     }

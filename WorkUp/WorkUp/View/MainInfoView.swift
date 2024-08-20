@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct TestInformationView: View {
+struct MainInfoView: View {
     @Environment(\.dismiss) private var dismiss
     @State private var isInformationFirst: Bool = true
     var body: some View {
@@ -67,5 +67,5 @@ struct TestInformationView: View {
 }
 
 #Preview {
-    TestInformationView()
+    MainInfoView()
 }
