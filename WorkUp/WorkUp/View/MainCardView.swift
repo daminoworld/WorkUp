@@ -25,6 +25,7 @@ struct MainCardView: View {
                 .padding(.top, 35)
                 
                 Text("나만의 카드")
+                    .foregroundStyle(.white)
                     .font(.system(size: 40))
                     .fontWeight(.bold)
                     .padding(.top, 4)
