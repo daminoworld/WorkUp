@@ -15,37 +15,44 @@ struct MainCardView: View {
                 .fill(Color(hex: "232323"))
             
             VStack(spacing: 0) {
-                (Text("퀴즈")
-                    .foregroundColor(Color(hex: "53E7FB"))
-                 + Text("를\n 시작해 볼까요?"))
-                .font(.system(size: 40))
+                (Text("스트레칭")
+                    .foregroundColor(Color.main)
+                 + Text("하면서 보는")
+                    .foregroundColor(.white)
+                )
+                .font(.system(size: 20))
                 .fontWeight(.bold)
-                .multilineTextAlignment(.center)
-                .foregroundColor(.white)
-                .padding(.top, 90)
-                Spacer()
+                .padding(.top, 35)
+                
+                Text("나만의 카드")
+                    .font(.system(size: 40))
+                    .fontWeight(.bold)
+                    .padding(.top, 4)
+                
+                Image("MainCardImage")
                 
                 NavigationLink {
                     //TODO: shuffledCardList 넣어서 CardDetail연결
                     CardDetailView(shuffledCardList: shuffledCardList)
                 } label: {
                     RoundedRectangle(cornerRadius: 12)
-                        .fill(Color(hex: "53E7FB"))
-                        .frame(width: 282, height: 64)
+                        .fill(Color.main)
+                        .frame(width: 282, height: 60)
                         .overlay(alignment: .center) {
-                            Text("시작하기")
+                            Text("보러가기")
                                 .font(.system(size: 20))
                                 .foregroundStyle(.black)
                                 .fontWeight(.semibold)
                         }
                 }
+                .padding(.top, 32)
                 
                 NavigationLink {
 //                    NewCardView()
                     ListView()
                 } label: {
                     RoundedRectangle(cornerRadius: 12)
-                        .fill(Color(hex: "000000"))
+                        .fill(Color.black)
                         .frame(width: 282, height: 47)
                         .overlay(alignment: .center) {
                             HStack {
