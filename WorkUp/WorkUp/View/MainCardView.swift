@@ -34,7 +34,8 @@ struct MainCardView: View {
                 
                 NavigationLink {
                     //TODO: shuffledCardList 넣어서 CardDetail연결
-                    CardDetailView(shuffledCardList: shuffledCardList)
+//                    CardDetailView(shuffledCardList: shuffledCardList)
+                    YawMotionCardView(motionManager: MotionManager())
                 } label: {
                     RoundedRectangle(cornerRadius: 12)
                         .fill(Color.main)

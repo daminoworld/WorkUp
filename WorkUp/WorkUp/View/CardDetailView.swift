@@ -50,7 +50,6 @@ struct CardDetailView: View {
                         .scaledToFit()
                         .frame(width: 106, height: 106)
                         .padding(.bottom, 20)
-                        
                 }
                 
                 if isLastQuiz {

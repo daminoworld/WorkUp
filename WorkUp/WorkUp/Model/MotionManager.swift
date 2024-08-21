@@ -13,10 +13,13 @@ class MotionManager: ObservableObject {
     @Published var isDeviceFlipped: Bool = false
     @Published var timeIntervalSince: TimeInterval = 0.0
     @Published var isDeviceFlippedFor5Seconds: Bool = false
-
+    @Published var xAcceleration: Double = 0.0
+    
     private var flipStartTime: Date?
     private let flipDuration: TimeInterval = 5.0 // 5초
-    
+    let maxXAcceleration = 0.5
+    let minXAcceleration = -0.5
+
     init() {
         self.motionManager = CMMotionManager()
         self.motionManager.accelerometerUpdateInterval = 0.1
@@ -32,7 +35,7 @@ class MotionManager: ObservableObject {
     private func handleDeviceMotion(data: CMAccelerometerData) {
         let acceleration = data.acceleration
         DispatchQueue.main.async {
-            if acceleration.z > 0.8 {
+            if acceleration.z > 0.6 {
                 self.isDeviceFlipped = true
                 if self.flipStartTime == nil {
                     self.flipStartTime = Date()
@@ -47,6 +50,14 @@ class MotionManager: ObservableObject {
                 self.isDeviceFlipped = false
                 self.isDeviceFlippedFor5Seconds = false
                 self.timeIntervalSince = 0.0
+            }
+            
+            self.xAcceleration = Double(String(format: "%.2f", acceleration.x)) ?? acceleration.x
+
+            if self.xAcceleration > self.maxXAcceleration {
+                self.xAcceleration = self.maxXAcceleration
+            } else if self.xAcceleration < self.minXAcceleration {
+                self.xAcceleration = self.minXAcceleration
             }
         }
     }
