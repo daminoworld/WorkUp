@@ -7,6 +7,9 @@
 
 import SwiftUI
 import SwiftData
+enum MotionMode: CaseIterable {
+    case top, left, right
+}
 
 struct CardDetailView: View {
     @Environment(\.presentationMode) var presentationMode
@@ -19,6 +22,7 @@ struct CardDetailView: View {
     @State var isLastQuiz = false
     @State var shuffledCardList: [NewCard] = Array(repeating: NewCard(question: "", answer: ""), count: 100)
     @State private var dragOffset: CGSize = .zero // 드래그 오프셋 상태 변수
+    @State var motionMode: MotionMode = .left
     
     var body: some View {
         ZStack(alignment: .top) {
@@ -43,14 +47,97 @@ struct CardDetailView: View {
             Color.black
                 .ignoresSafeArea(.all)
 
-            VStack {
-                if !motionManager.isDeviceFlipped {
-                    Image("Arrow")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 106, height: 106)
-                        .padding(.bottom, 20)
+            VStack(spacing: 0) {
+                if motionMode == .top {
+                    topHeader
+                    ZStack {
+                        //백그라운드 카드
+                        Rectangle()
+                            .foregroundStyle(.gray.opacity(0.4))
+                            .clipShape(RoundedRectangle(cornerSize: CGSize(width: 20, height: 20)))
+                            .rotationEffect(.degrees(10))
+                            .offset(x: motionManager.isDeviceFlipped ? 60 : -60, y: motionManager.isDeviceFlipped ? -50 : 50)
+                            .frame(width: 315, height: 424)
+                        cardView
+                            .frame(width: 315, height: 424)
+                    }
+                    .padding(.top, motionManager.isDeviceFlipped ? 60 : 20)
+                    
+                    if motionManager.isDeviceFlipped && !motionManager.isDeviceFlippedFor5Seconds {
+                        VStack(spacing: 0) {
+                            Text("내용 확인하기")
+                                .font(.system(size: 41, weight: .bold))
+                                .padding(.top, 37)
+                            Text("내용 확인을 위해 고개를 든 상태로\n5초간 유지해주세요.")
+                                .font(.system(size: 20, weight: .semibold))
+                                .multilineTextAlignment(.center)
+                                .padding(.top, 19)
+                        }
+                        
+                    } else if motionManager.isDeviceFlipped && motionManager.isDeviceFlippedFor5Seconds {
+                        
+                        Image("arrow")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 106, height: 155)
+                            .rotationEffect(.degrees(180.0))
+                            .padding(.top, 52)
+                    }
+                    
+                } else {
+                    sideHeader
+                    YawMotionCardView(motionManager: motionManager, motionMode: $motionMode, currentIndex: $currentIndex, shuffledCardList: $shuffledCardList)
+                        .padding(.top, 21.75)
+                    //임시 드래그
+                        .gesture(
+                            // 왼쪽으로 스와이프 감지
+                            DragGesture(minimumDistance: 20)
+                                .onChanged { value in
+                                    // 드래그할 때의 위치 업데이트
+                                    self.dragOffset = value.translation
+                                }
+                                .onEnded { value in
+                                    if value.translation.width < 0 {
+                                        if currentIndex < shuffledCardList.count - 1{
+                                            currentIndex += 1
+                                            if currentIndex == shuffledCardList.count - 1{
+                                                isLastQuiz = true
+                                            }
+                                        }
+                                    }
+                                    // 오른쪽으로 스와이프 감지
+                                    if value.translation.width > 0 {
+                                        if currentIndex > 0 {
+                                            currentIndex -= 1
+                                        }
+                                        if isLastQuiz {
+                                            isLastQuiz = false
+                                        }
+                                    }
+                                    //랜덤 모션모드 로직임시로 배치
+                                    randomMode()
+                                    self.dragOffset = .zero
+                                }
+                        )
                 }
+            }
+            .navigationBarBackButtonHidden(true)
+            .onAppear {
+                if shuffledCardList.count == 1{
+                    isLastQuiz = true
+                }
+            }
+        }
+    }
+    
+    var topHeader: some View {
+        VStack(spacing: 0) {
+            if !motionManager.isDeviceFlipped {
+                Image("arrow")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 106, height: 155)
+                    .padding(.bottom, 20)
                 
                 if isLastQuiz {
                     Text("모든 카드가 끝났습니다")
@@ -68,48 +155,28 @@ struct CardDetailView: View {
                     .foregroundStyle(isLastQuiz ? Color("MainColor") :.white)
                     .padding(.bottom, 20)
                 }
-                
-                ZStack {
-                    Rectangle()
-                        .foregroundStyle(.gray.opacity(0.4))
-                        .clipShape(RoundedRectangle(cornerSize: CGSize(width: 20, height: 20)))
-                        .rotationEffect(.degrees(10))
-                        .offset(x: motionManager.isDeviceFlipped ? 60 : -60, y: motionManager.isDeviceFlipped ? -50 : 50)
-                        .frame(width: 315, height: 424)
-                    
-                    cardView
-                        .frame(width: 315, height: 424)
-                }
-                .padding(.top)
-                
-                if motionManager.isDeviceFlipped && !motionManager.isDeviceFlippedFor5Seconds {
-                    VStack {
-                        Text("내용 확인하기")
-                            .font(.system(size: 41, weight: .bold))
-                            .padding(.bottom, 15)
-                        Text("내용 확인을 위해 고개를 든 상태로\n5초간 유지해주세요.")
-                            .font(.system(size: 20, weight: .semibold))
-                            .multilineTextAlignment(.center)
-                    }
-                    .padding(.bottom, 70)
-                    
-                } else if motionManager.isDeviceFlipped && motionManager.isDeviceFlippedFor5Seconds {
-                    
-                    Image("Arrow")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 106, height: 106)
-                        .rotationEffect(.degrees(180.0))
-                }
-            }
-            .navigationBarBackButtonHidden(true)
-            .onAppear {
-                if shuffledCardList.count == 1{
-                    isLastQuiz = true
-                }
             }
         }
-        
+    }
+    
+    var sideHeader: some View {
+        VStack(spacing: 0) {
+            Image(motionMode == .left ? "leftArrow" : "rightArrow")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 177, height: 95)
+                .padding(.bottom, 15.82)
+            Group {
+                Text("고개를")
+                    .font(.system(size: 18, weight: .regular))
+                + Text(" 꺽어서")
+                    .font(.system(size: 18, weight: .bold))
+                + Text((motionMode == .left && motionManager.xAcceleration < -0.15) || motionMode == .right && motionManager.xAcceleration > 0.15 ? "제목으로 돌아가기" :" 내용을 확인")
+                    .font(.system(size: 18, weight: .regular))
+            }
+            .foregroundStyle(.white)
+            .padding(.top, 44.4)
+        }
     }
     
     var cardView: some View {
@@ -152,7 +219,8 @@ struct CardDetailView: View {
                             isLastQuiz = false
                         }
                     }
-                    
+                    //랜덤 모션모드 로직임시로 배치
+                    randomMode()
                     self.dragOffset = .zero
                 }
         )
@@ -187,37 +255,10 @@ struct CardDetailView: View {
         .padding(30)
     }
     
-    private func deleteCard(){
-        for card in newCards{
-            if card.id == shuffledCardList[currentIndex].id{
-                modelContext.delete(card)
-            }
-        }
+    func randomMode() {
+        motionMode = MotionMode.allCases.randomElement()!
     }
-}
-
-
-struct ProgressRingView: View {
-    @Binding var progress: Double
     
-    var body: some View {
-        ZStack {
-            Circle()
-                .stroke(lineWidth: 20.0)
-                .opacity(0.3)
-                .foregroundColor(Color(.gray))
-            Circle()
-                .trim(from: 0.0, to: CGFloat(min(progress / 5, 1.0)))
-                .stroke(style: StrokeStyle(lineWidth: 20.0, lineCap: .round, lineJoin: .round))
-                .foregroundColor(.white)
-                .rotationEffect(Angle(degrees: 270.0))
-                .animation(.linear, value: progress / 5)
-            Text(String(format: "%.0f", min(progress, 5.0)))
-                .font(.system(size: 110, weight: .bold))
-                .foregroundColor(Color.black)
-        }
-        .padding(40)
-    }
 }
 
 #Preview {
