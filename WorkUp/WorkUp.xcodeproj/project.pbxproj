@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1E05788E2C75D586001E2879 /* YawMotionCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E05788D2C75D586001E2879 /* YawMotionCardView.swift */; };
+		1E0578902C76241B001E2879 /* CardContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E05788F2C76241A001E2879 /* CardContentView.swift */; };
+		1E0578932C762ABD001E2879 /* ProgressRingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E0578922C762ABD001E2879 /* ProgressRingView.swift */; };
 		1E8EEE442C71E7610086B06F /* ListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E8EEE432C71E7610086B06F /* ListView.swift */; };
 		1E8EEE462C71FB4E0086B06F /* ListCardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E8EEE452C71FB4E0086B06F /* ListCardCell.swift */; };
 		E7D427D62C4D293D00485BB9 /* WorkUpApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D427D52C4D293D00485BB9 /* WorkUpApp.swift */; };
@@ -26,6 +29,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1E05788D2C75D586001E2879 /* YawMotionCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YawMotionCardView.swift; sourceTree = "<group>"; };
+		1E05788F2C76241A001E2879 /* CardContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardContentView.swift; sourceTree = "<group>"; };
+		1E0578922C762ABD001E2879 /* ProgressRingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressRingView.swift; sourceTree = "<group>"; };
 		1E8EEE432C71E7610086B06F /* ListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListView.swift; sourceTree = "<group>"; };
 		1E8EEE452C71FB4E0086B06F /* ListCardCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCardCell.swift; sourceTree = "<group>"; };
 		E7D427D22C4D293D00485BB9 /* WorkUp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WorkUp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -56,6 +62,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1E05788C2C75D56A001E2879 /* YawMotionCardView */ = {
+			isa = PBXGroup;
+			children = (
+				1E05788D2C75D586001E2879 /* YawMotionCardView.swift */,
+				1E05788F2C76241A001E2879 /* CardContentView.swift */,
+			);
+			path = YawMotionCardView;
+			sourceTree = "<group>";
+		};
+		1E0578912C762A99001E2879 /* ProgressBarRingView */ = {
+			isa = PBXGroup;
+			children = (
+				1E0578922C762ABD001E2879 /* ProgressRingView.swift */,
+			);
+			path = ProgressBarRingView;
+			sourceTree = "<group>";
+		};
 		1E8EEE422C71E74F0086B06F /* ListView */ = {
 			isa = PBXGroup;
 			children = (
@@ -111,6 +134,8 @@
 				E7D427EA2C4D3A6300485BB9 /* MainCardView.swift */,
 				E7D427E52C4D3A6200485BB9 /* MainInfoView.swift */,
 				E7D427E72C4D3A6200485BB9 /* MainView.swift */,
+				1E0578912C762A99001E2879 /* ProgressBarRingView */,
+				1E05788C2C75D56A001E2879 /* YawMotionCardView */,
 				1E8EEE422C71E74F0086B06F /* ListView */,
 			);
 			path = View;
@@ -205,12 +230,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1E0578902C76241B001E2879 /* CardContentView.swift in Sources */,
 				E7D427F42C4D3A7400485BB9 /* NewCard.swift in Sources */,
 				1E8EEE442C71E7610086B06F /* ListView.swift in Sources */,
 				E7D427FA2C4D3A9800485BB9 /* Color+.swift in Sources */,
 				E7D427ED2C4D3A6300485BB9 /* MainView.swift in Sources */,
 				E7D427F92C4D3A9800485BB9 /* TextEditor+.swift in Sources */,
+				1E05788E2C75D586001E2879 /* YawMotionCardView.swift in Sources */,
 				E7D427F02C4D3A6300485BB9 /* MainCardView.swift in Sources */,
+				1E0578932C762ABD001E2879 /* ProgressRingView.swift in Sources */,
 				E7D427EB2C4D3A6300485BB9 /* MainInfoView.swift in Sources */,
 				E7D427F32C4D3A7400485BB9 /* MotionManager.swift in Sources */,
 				E7D427FB2C4D3A9800485BB9 /* View+.swift in Sources */,
@@ -352,7 +380,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"WorkUp/Preview Content\"";
-				DEVELOPMENT_TEAM = AFS6YUQ2Y4;
+				DEVELOPMENT_TEAM = AQCS8SYVV6;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -381,7 +409,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"WorkUp/Preview Content\"";
-				DEVELOPMENT_TEAM = AFS6YUQ2Y4;
+				DEVELOPMENT_TEAM = AQCS8SYVV6;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
