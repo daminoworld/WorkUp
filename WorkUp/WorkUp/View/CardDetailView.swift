@@ -22,32 +22,30 @@ struct CardDetailView: View {
     @State var isLastQuiz = false
     @State var shuffledCardList: [NewCard] = Array(repeating: NewCard(question: "", answer: ""), count: 100)
     @State private var dragOffset: CGSize = .zero // 드래그 오프셋 상태 변수
+    @State private var scrollId: Int? = 0
     @State var motionMode: MotionMode = .left
     
     var body: some View {
         ZStack(alignment: .top) {
-            // TODO: 닫기 버튼 삭제 문의 필요
-//            VStack {
-//                HStack {
-//                    Spacer()
-//                    
-//                    Button(action: {
-//                        self.presentationMode.wrappedValue.dismiss()
-//                    }, label: {
-//                        Image(isLastQuiz ? "Activeclose" : "Close")
-//                            .resizable()
-//                            .scaledToFit()
-//                            .frame(width: 35, height: 35)
-//                    })
-//                    
-//                }
-//                Spacer()
-//            }
+
             // ZStack 배경으로 전체 다 덮게 안하면 VStack 이 제대로 배치가 안됨
             Color.black
                 .ignoresSafeArea(.all)
-
+            
             VStack(spacing: 0) {
+                HStack {
+                    Spacer()
+                    
+                    Button(action: {
+                        self.presentationMode.wrappedValue.dismiss()
+                    }, label: {
+                        Image(isLastQuiz ? "Activeclose" : "Close")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 35, height: 35)
+                    })
+                    .padding(.trailing, 23)
+                }
                 if motionMode == .top {
                     topHeader
                     ZStack {
@@ -58,8 +56,32 @@ struct CardDetailView: View {
                             .rotationEffect(.degrees(10))
                             .offset(x: motionManager.isDeviceFlipped ? 60 : -60, y: motionManager.isDeviceFlipped ? -50 : 50)
                             .frame(width: 315, height: 424)
-                        cardView
-                            .frame(width: 315, height: 424)
+                       
+                        GeometryReader { geo in
+                            ScrollView(.horizontal, showsIndicators: false) {
+                                LazyHStack(spacing: 10) {
+                                    ForEach(shuffledCardList.indices, id: \.self) { idx in
+                                        cardView
+                                            .frame(width: 315, height: 424)
+                                            .safeAreaPadding(.horizontal, 60)
+                                    }.scrollTransition(.interactive, axis: .horizontal) { content, phase in
+                                        content
+                                            .opacity(phase.isIdentity ? 1 : 0.6)
+                                            .scaleEffect(phase.isIdentity ? 1 : 0.85)
+                                        
+                                    }
+                                }
+                                .scrollTargetLayout()
+                            }
+                            .scrollTargetBehavior(.viewAligned)
+                            .scrollPosition(id: $scrollId)
+                            .onChange(of: scrollId) { oldValue, newValue in
+                                guard let newValue else { return }
+                                currentIndex = newValue
+                                randomMode()
+                            }
+                            
+                        }
                     }
                     .padding(.top, motionManager.isDeviceFlipped ? 60 : 20)
                     
@@ -76,7 +98,7 @@ struct CardDetailView: View {
                         
                     } else if motionManager.isDeviceFlipped && motionManager.isDeviceFlippedFor5Seconds {
                         
-                        Image("arrow")
+                        Image("Arrow")
                             .resizable()
                             .scaledToFit()
                             .frame(width: 106, height: 155)
@@ -86,39 +108,36 @@ struct CardDetailView: View {
                     
                 } else {
                     sideHeader
-                    YawMotionCardView(motionManager: motionManager, motionMode: $motionMode, currentIndex: $currentIndex, shuffledCardList: $shuffledCardList)
-                        .padding(.top, 21.75)
-                    //임시 드래그
-                        .gesture(
-                            // 왼쪽으로 스와이프 감지
-                            DragGesture(minimumDistance: 20)
-                                .onChanged { value in
-                                    // 드래그할 때의 위치 업데이트
-                                    self.dragOffset = value.translation
+                    
+                    GeometryReader { geo in
+                        ScrollView(.horizontal, showsIndicators: false) {
+                            LazyHStack(spacing: 10) {
+                                ForEach(shuffledCardList.indices, id: \.self) { idx in
+                                    YawMotionCardView(motionManager: motionManager, motionMode: $motionMode, currentIndex: $currentIndex, shuffledCardList: $shuffledCardList)
+                                        .padding(.top, 21.75)
+                                        .frame(width: 315, height: 424)
+                                        .safeAreaPadding(.horizontal, 60)
                                 }
-                                .onEnded { value in
-                                    if value.translation.width < 0 {
-                                        if currentIndex < shuffledCardList.count - 1{
-                                            currentIndex += 1
-                                            if currentIndex == shuffledCardList.count - 1{
-                                                isLastQuiz = true
-                                            }
-                                        }
-                                    }
-                                    // 오른쪽으로 스와이프 감지
-                                    if value.translation.width > 0 {
-                                        if currentIndex > 0 {
-                                            currentIndex -= 1
-                                        }
-                                        if isLastQuiz {
-                                            isLastQuiz = false
-                                        }
-                                    }
-                                    //랜덤 모션모드 로직임시로 배치
-                                    randomMode()
-                                    self.dragOffset = .zero
+                                .scrollTransition(.interactive, axis: .horizontal) { content, phase in
+                                    content
+                                        .opacity(phase.isIdentity ? 1 : 0.6)
+                                        .scaleEffect(phase.isIdentity ? 1 : 0.85)
+                                    
                                 }
-                        )
+                            }
+                            .scrollTargetLayout()
+                        }
+                        .scrollTargetBehavior(.viewAligned)
+                        .scrollPosition(id: $scrollId)
+                        .onChange(of: scrollId) { oldValue, newValue in
+                            guard let newValue else { return }
+                            currentIndex = newValue
+                            randomMode()
+                        }
+                        
+                    }
+                    
+                    
                 }
             }
             .navigationBarBackButtonHidden(true)
@@ -133,10 +152,13 @@ struct CardDetailView: View {
     var topHeader: some View {
         VStack(spacing: 0) {
             if !motionManager.isDeviceFlipped {
-                Image("arrow")
+                Image("Arrow")
                     .resizable()
                     .scaledToFit()
                     .frame(width: 106, height: 155)
+                    .background {
+                        Color.clear
+                    }
                     .padding(.bottom, 20)
                 
                 if isLastQuiz {
@@ -191,40 +213,9 @@ struct CardDetailView: View {
                 cardContentView
             }
         }
-        .offset(CGSize(width: dragOffset.width, height: 0))
-        .rotationEffect(.degrees(Double(dragOffset.width) * -0.1))
         .animation(.easeInOut, value: motionManager.isDeviceFlipped)
-        .gesture(
-            // 왼쪽으로 스와이프 감지
-            DragGesture(minimumDistance: 20)
-                .onChanged { value in
-                    // 드래그할 때의 위치 업데이트
-                    self.dragOffset = value.translation
-                }
-                .onEnded { value in
-                    if value.translation.width < 0 {
-                        if currentIndex < shuffledCardList.count - 1{
-                            currentIndex += 1
-                            if currentIndex == shuffledCardList.count - 1{
-                                isLastQuiz = true
-                            }
-                        }
-                    }
-                    // 오른쪽으로 스와이프 감지
-                    if value.translation.width > 0 {
-                        if currentIndex > 0 {
-                            currentIndex -= 1
-                        }
-                        if isLastQuiz {
-                            isLastQuiz = false
-                        }
-                    }
-                    //랜덤 모션모드 로직임시로 배치
-                    randomMode()
-                    self.dragOffset = .zero
-                }
-        )
     }
+    
     
     // 카드 내부 내용
     var cardContentView: some View {
@@ -264,4 +255,3 @@ struct CardDetailView: View {
 #Preview {
     CardDetailView()
 }
-
