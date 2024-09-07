@@ -71,13 +71,6 @@
 			path = YawMotionCardView;
 			sourceTree = "<group>";
 		};
-		1E0578912C762A99001E2879 /* ProgressBarRingView */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = ProgressBarRingView;
-			sourceTree = "<group>";
-		};
 		1E8EEE422C71E74F0086B06F /* ListView */ = {
 			isa = PBXGroup;
 			children = (
@@ -168,7 +161,6 @@
 				E764E5432C8C223700A3CBEE /* Main */,
 				E764E5442C8C231200A3CBEE /* CardDetail */,
 				E764E5452C8C236C00A3CBEE /* NewCard */,
-				1E0578912C762A99001E2879 /* ProgressBarRingView */,
 				1E8EEE422C71E74F0086B06F /* ListView */,
 			);
 			path = View;

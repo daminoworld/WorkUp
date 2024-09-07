@@ -52,7 +52,7 @@ struct YawMotionCardView: View {
                 .zIndex(abs(rotationAngle) > 5 ? 0 : 1)
                 .animation(.easeInOut, value: motionManager.xAcceleration)
 
-            QuestionCard
+            questionCard
                 .frame(width: 315, height: 424)
                 .opacity(abs(rotationAngle) > 5 ? 1 : 0.3)
                 .animation(.easeInOut, value: motionManager.xAcceleration)
@@ -77,7 +77,7 @@ struct YawMotionCardView: View {
         }
     }
     
-    var QuestionCard: some View {
+    var questionCard: some View {
         ZStack {
             Rectangle()
                 .foregroundStyle(.white)
