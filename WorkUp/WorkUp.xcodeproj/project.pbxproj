@@ -74,7 +74,6 @@
 		1E0578912C762A99001E2879 /* ProgressBarRingView */ = {
 			isa = PBXGroup;
 			children = (
-				1E0578922C762ABD001E2879 /* ProgressRingView.swift */,
 			);
 			path = ProgressBarRingView;
 			sourceTree = "<group>";
@@ -86,6 +85,43 @@
 				1E8EEE452C71FB4E0086B06F /* ListCardCell.swift */,
 			);
 			path = ListView;
+			sourceTree = "<group>";
+		};
+		E764E5432C8C223700A3CBEE /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				E7D427E72C4D3A6200485BB9 /* MainView.swift */,
+				E7D427EA2C4D3A6300485BB9 /* MainCardView.swift */,
+				E7D427E62C4D3A6200485BB9 /* EmptyCardView.swift */,
+				E7D427E52C4D3A6200485BB9 /* MainInfoView.swift */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
+		E764E5442C8C231200A3CBEE /* CardDetail */ = {
+			isa = PBXGroup;
+			children = (
+				E7D427E82C4D3A6200485BB9 /* CardDetailView.swift */,
+				1E0578922C762ABD001E2879 /* ProgressRingView.swift */,
+				1E05788C2C75D56A001E2879 /* YawMotionCardView */,
+			);
+			path = CardDetail;
+			sourceTree = "<group>";
+		};
+		E764E5452C8C236C00A3CBEE /* NewCard */ = {
+			isa = PBXGroup;
+			children = (
+				E7D427E92C4D3A6300485BB9 /* NewCardView.swift */,
+			);
+			path = NewCard;
+			sourceTree = "<group>";
+		};
+		E764E5462C8C240300A3CBEE /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				E7D427F12C4D3A7400485BB9 /* MotionManager.swift */,
+			);
+			path = Manager;
 			sourceTree = "<group>";
 		};
 		E7D427C92C4D293D00485BB9 = {
@@ -108,6 +144,7 @@
 			isa = PBXGroup;
 			children = (
 				E7D427D52C4D293D00485BB9 /* WorkUpApp.swift */,
+				E764E5462C8C240300A3CBEE /* Manager */,
 				E7D427E42C4D3A5400485BB9 /* Model */,
 				E7D427E32C4D3A4400485BB9 /* View */,
 				E7D427D92C4D293E00485BB9 /* Assets.xcassets */,
@@ -128,14 +165,10 @@
 		E7D427E32C4D3A4400485BB9 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				E7D427E82C4D3A6200485BB9 /* CardDetailView.swift */,
-				E7D427E62C4D3A6200485BB9 /* EmptyCardView.swift */,
-				E7D427E92C4D3A6300485BB9 /* NewCardView.swift */,
-				E7D427EA2C4D3A6300485BB9 /* MainCardView.swift */,
-				E7D427E52C4D3A6200485BB9 /* MainInfoView.swift */,
-				E7D427E72C4D3A6200485BB9 /* MainView.swift */,
+				E764E5432C8C223700A3CBEE /* Main */,
+				E764E5442C8C231200A3CBEE /* CardDetail */,
+				E764E5452C8C236C00A3CBEE /* NewCard */,
 				1E0578912C762A99001E2879 /* ProgressBarRingView */,
-				1E05788C2C75D56A001E2879 /* YawMotionCardView */,
 				1E8EEE422C71E74F0086B06F /* ListView */,
 			);
 			path = View;
@@ -144,7 +177,6 @@
 		E7D427E42C4D3A5400485BB9 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				E7D427F12C4D3A7400485BB9 /* MotionManager.swift */,
 				E7D427F22C4D3A7400485BB9 /* NewCard.swift */,
 			);
 			path = Model;
@@ -380,7 +412,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"WorkUp/Preview Content\"";
-				DEVELOPMENT_TEAM = AQCS8SYVV6;
+				DEVELOPMENT_TEAM = AFS6YUQ2Y4;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -409,7 +441,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"WorkUp/Preview Content\"";
-				DEVELOPMENT_TEAM = AQCS8SYVV6;
+				DEVELOPMENT_TEAM = AFS6YUQ2Y4;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;

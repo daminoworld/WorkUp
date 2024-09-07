@@ -73,7 +73,7 @@ struct YawMotionCardView: View {
                 .clipShape(RoundedRectangle(cornerSize: CGSize(width: 20, height: 20)))
                 .shadow(color: .black, radius: 10, x: 0, y: 5)
             
-            CardContentView(isAnswer: true, content: shuffledCardList[currentIndex].question, index: currentIndex, totalNum: shuffledCardList.count)
+            CardContentView(isAnswer: true, content: shuffledCardList[currentIndex].answer, index: currentIndex, totalNum: shuffledCardList.count)
         }
     }
     
