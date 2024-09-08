@@ -20,10 +20,10 @@ struct CardDetailView: View {
     @State private var showAlert = false
     @State var currentIndex = 0
     @State var isLastQuiz = false
-    @State var shuffledCardList: [NewCard] = Array(repeating: NewCard(question: "", answer: ""), count: 100)
+    var shuffledCardList: [NewCard] = Array(repeating: NewCard(question: "", answer: ""), count: 100)
     @State private var dragOffset: CGSize = .zero // 드래그 오프셋 상태 변수
     @State private var scrollId: Int? = 0
-    @State var motionMode: MotionMode = .left
+    @State var motionMode: MotionMode = .top
     
     var body: some View {
         ZStack(alignment: .top) {
@@ -51,22 +51,20 @@ struct CardDetailView: View {
                 
                 GeometryReader { geo in
                     ScrollView(.horizontal, showsIndicators: false) {
-                        LazyHStack(spacing: 10) {
+                        LazyHStack(spacing: 0) {
                             ForEach(shuffledCardList.indices, id: \.self) { idx in
                                 if motionMode == .top {
-                                    cardView
+                                    RollMotionCardView(motionManager: motionManager, currentIndex: $currentIndex, shuffledCardList: shuffledCardList)
                                         .frame(width: 315, height: 424)
-                                        .safeAreaPadding(.horizontal, 60)
-//
-
                                 } else {
-                                    YawMotionCardView(motionManager: motionManager, motionMode: $motionMode, currentIndex: $currentIndex, shuffledCardList: $shuffledCardList)
-                                        .padding(.top, 21.75)
+                                    YawMotionCardView(motionManager: motionManager, motionMode: $motionMode, currentIndex: $currentIndex, shuffledCardList: shuffledCardList)
                                         .frame(width: 315, height: 424)
-                                        .safeAreaPadding(.horizontal, 60)
+                                        .padding(.top, 21.75)
                                 }
-                                
-                            }.scrollTransition(.interactive, axis: .horizontal) { content, phase in
+                            }
+                            .offset(x: -20)
+                            .safeAreaPadding(.horizontal, 60)
+                            .scrollTransition(.interactive, axis: .horizontal) { content, phase in
                                 content
                                     .opacity(phase.isIdentity ? 1 : 0.6)
                                     .scaleEffect(phase.isIdentity ? 1 : 0.85)
@@ -82,7 +80,7 @@ struct CardDetailView: View {
                         currentIndex = newValue
                         randomMode()
                     }
-                    
+                    .scrollDisabled(motionManager.isDeviceFlipped ? true : false)
                 }
 //                .padding(.top, motionManager.isDeviceFlipped ? 60 : 20)
                 
@@ -114,6 +112,8 @@ struct CardDetailView: View {
                 if shuffledCardList.count == 1{
                     isLastQuiz = true
                 }
+                
+                
             }
         }
     }
@@ -169,59 +169,6 @@ struct CardDetailView: View {
                 .padding(.top, 44.4)
             }
         }
-    }
-    
-    var cardView: some View {
-        ZStack{
-            Rectangle()
-                .foregroundStyle(.gray.opacity(0.4))
-                .clipShape(RoundedRectangle(cornerSize: CGSize(width: 20, height: 20)))
-                .rotationEffect(.degrees(10))
-                .offset(x: motionManager.isDeviceFlipped ? 60 : -60, y: motionManager.isDeviceFlipped ? -50 : 50)
-                .frame(width: 315, height: 424)
-            
-            Rectangle()
-                .foregroundStyle(motionManager.isDeviceFlipped ? Color("MainColor") : .white)
-                .clipShape(RoundedRectangle(cornerSize: CGSize(width: 20, height: 20)))
-                .shadow(color: .black, radius: 10, x: 0, y: 5)
-            
-            if motionManager.isDeviceFlipped && !motionManager.isDeviceFlippedFor5Seconds{
-                ProgressRingView(progress: $motionManager.timeIntervalSince)
-            } else {
-                cardContentView
-            }
-        }
-        .animation(.easeInOut, value: motionManager.isDeviceFlipped)
-    }
-    
-    
-    // roll회전용 카드 내부 내용
-    var cardContentView: some View {
-        VStack{
-            HStack{
-                Text(motionManager.isDeviceFlipped ? "Content" : "Title")
-                    .font(.system(size: 45))
-                    .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
-                    .foregroundStyle(.black)
-                Spacer()
-                Group {
-                    Text("\(currentIndex + 1)")
-                        .font(.system(size: 15, weight: .semibold))
-                        .foregroundStyle(motionManager.isDeviceFlipped ? .white : .black)
-                    + Text("/\(shuffledCardList.count)")
-                        .font(.system(size: 15, weight: .regular))
-                        .foregroundStyle(motionManager.isDeviceFlipped ? .white : Color("CardCount"))
-                }
-            }
-            Text("\(motionManager.isDeviceFlipped ? shuffledCardList[currentIndex].answer : shuffledCardList[currentIndex].question)")
-                .font(.system(size: motionManager.isDeviceFlipped ? 20 : 38 , weight: .bold))
-                .foregroundStyle(.black)
-                .lineSpacing(motionManager.isDeviceFlipped ? 21 : 4)
-                .tracking(-0.4)
-                .padding(.top, 43)
-            Spacer()
-        }
-        .padding(30)
     }
     
     func randomMode() {

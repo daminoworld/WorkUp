@@ -10,13 +10,22 @@ import CoreMotion
 
 class MotionManager: ObservableObject {
     private var motionManager: CMMotionManager
+    
     @Published var isDeviceFlipped: Bool = false
     @Published var timeIntervalSince: TimeInterval = 0.0
     @Published var isDeviceFlippedFor5Seconds: Bool = false
-    @Published var xAcceleration: Double = 0.0
+    
+    @Published var isYawRotated: Bool = false
+    @Published var yawTimeIntervalSince: TimeInterval = 0.0
+    @Published var isYawRotatedFor5Seconds: Bool = false
     
     private var flipStartTime: Date?
+    private var yawFlipStartTime: Date?
     private let flipDuration: TimeInterval = 5.0 // 5초
+    
+
+    @Published var xAcceleration: Double = 0.0
+    
     let maxXAcceleration = 0.5
     let minXAcceleration = -0.5
 
@@ -58,6 +67,25 @@ class MotionManager: ObservableObject {
                 self.xAcceleration = self.maxXAcceleration
             } else if self.xAcceleration < self.minXAcceleration {
                 self.xAcceleration = self.minXAcceleration
+            }
+            
+            
+            //TODO: YAW 5초 룰 작업
+            if abs(self.xAcceleration) == 0.5 {
+                self.isYawRotated = true
+                if self.yawFlipStartTime == nil {
+                    self.yawFlipStartTime = Date()
+                } else if let startTime = self.yawFlipStartTime {
+                    self.yawTimeIntervalSince = Date().timeIntervalSince(startTime)
+                    if self.yawTimeIntervalSince >= self.flipDuration{
+                        self.isYawRotatedFor5Seconds = true
+                    }
+                }
+            } else {
+                self.yawFlipStartTime = nil
+                self.isYawRotated = false
+                self.isYawRotatedFor5Seconds = false
+                self.yawTimeIntervalSince = 0.0
             }
         }
     }

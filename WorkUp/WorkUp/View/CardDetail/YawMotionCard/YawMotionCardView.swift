@@ -11,7 +11,7 @@ struct YawMotionCardView: View {
     @ObservedObject var motionManager: MotionManager
     @Binding var motionMode: MotionMode
     @Binding var currentIndex: Int
-    @Binding var shuffledCardList: [NewCard]
+    @State var shuffledCardList: [NewCard]
     @State var isLeft = true
 
     var rotationAngle: Double {
@@ -28,7 +28,7 @@ struct YawMotionCardView: View {
     }
 
     var rotationOffset: (Double, Double) {
-        let minX = isLeft ? -200.0 : 200.0
+        let minX = isLeft ? -170.0 : 170.0
         let minY = isLeft ? 30.0 : -30.0
         let minAcceleration = isLeft ? motionManager.minXAcceleration : motionManager.maxXAcceleration
         var normalizedAcceleration = motionManager.xAcceleration > 0 ? 0 : motionManager.xAcceleration
@@ -45,7 +45,6 @@ struct YawMotionCardView: View {
     var body: some View {
         ZStack {
             answerCard
-                .frame(width: 315, height: 424)
                 .rotationEffect(.degrees(rotationAngle))
                 .offset(x: rotationOffset.0 , y: rotationOffset.1)
                 .opacity(abs(rotationAngle) > 5 ? 0.3 : 1)
@@ -53,7 +52,6 @@ struct YawMotionCardView: View {
                 .animation(.easeInOut, value: motionManager.xAcceleration)
 
             questionCard
-                .frame(width: 315, height: 424)
                 .opacity(abs(rotationAngle) > 5 ? 1 : 0.3)
                 .animation(.easeInOut, value: motionManager.xAcceleration)
         }
@@ -73,7 +71,11 @@ struct YawMotionCardView: View {
                 .clipShape(RoundedRectangle(cornerSize: CGSize(width: 20, height: 20)))
                 .shadow(color: .black, radius: 10, x: 0, y: 5)
             
-            CardContentView(isAnswer: true, content: shuffledCardList[currentIndex].answer, index: currentIndex, totalNum: shuffledCardList.count)
+                if !motionManager.isYawRotatedFor5Seconds{
+                    ProgressRingView(progress: $motionManager.yawTimeIntervalSince)
+                } else {
+                    CardContentView(isAnswer: true, content: shuffledCardList[currentIndex].answer, index: currentIndex, totalNum: shuffledCardList.count)
+                }
         }
     }
     
@@ -83,6 +85,7 @@ struct YawMotionCardView: View {
                 .foregroundStyle(.white)
                 .clipShape(RoundedRectangle(cornerSize: CGSize(width: 20, height: 20)))
                 .shadow(color: .black, radius: 10, x: 0, y: 5)
+            
             CardContentView(content: shuffledCardList[currentIndex].question, index: currentIndex, totalNum: shuffledCardList.count)
         }
     }

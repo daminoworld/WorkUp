@@ -12,6 +12,7 @@
 		1E0578932C762ABD001E2879 /* ProgressRingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E0578922C762ABD001E2879 /* ProgressRingView.swift */; };
 		1E8EEE442C71E7610086B06F /* ListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E8EEE432C71E7610086B06F /* ListView.swift */; };
 		1E8EEE462C71FB4E0086B06F /* ListCardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E8EEE452C71FB4E0086B06F /* ListCardCell.swift */; };
+		E764E5492C8C272200A3CBEE /* RollMotionCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E764E5482C8C272200A3CBEE /* RollMotionCardView.swift */; };
 		E7D427D62C4D293D00485BB9 /* WorkUpApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D427D52C4D293D00485BB9 /* WorkUpApp.swift */; };
 		E7D427DA2C4D293E00485BB9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E7D427D92C4D293E00485BB9 /* Assets.xcassets */; };
 		E7D427DD2C4D293E00485BB9 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E7D427DC2C4D293E00485BB9 /* Preview Assets.xcassets */; };
@@ -34,6 +35,7 @@
 		1E0578922C762ABD001E2879 /* ProgressRingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressRingView.swift; sourceTree = "<group>"; };
 		1E8EEE432C71E7610086B06F /* ListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListView.swift; sourceTree = "<group>"; };
 		1E8EEE452C71FB4E0086B06F /* ListCardCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCardCell.swift; sourceTree = "<group>"; };
+		E764E5482C8C272200A3CBEE /* RollMotionCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RollMotionCardView.swift; sourceTree = "<group>"; };
 		E7D427D22C4D293D00485BB9 /* WorkUp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WorkUp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E7D427D52C4D293D00485BB9 /* WorkUpApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkUpApp.swift; sourceTree = "<group>"; };
 		E7D427D92C4D293E00485BB9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -62,13 +64,12 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		1E05788C2C75D56A001E2879 /* YawMotionCardView */ = {
+		1E05788C2C75D56A001E2879 /* YawMotionCard */ = {
 			isa = PBXGroup;
 			children = (
 				1E05788D2C75D586001E2879 /* YawMotionCardView.swift */,
-				1E05788F2C76241A001E2879 /* CardContentView.swift */,
 			);
-			path = YawMotionCardView;
+			path = YawMotionCard;
 			sourceTree = "<group>";
 		};
 		1E8EEE422C71E74F0086B06F /* ListView */ = {
@@ -96,7 +97,9 @@
 			children = (
 				E7D427E82C4D3A6200485BB9 /* CardDetailView.swift */,
 				1E0578922C762ABD001E2879 /* ProgressRingView.swift */,
-				1E05788C2C75D56A001E2879 /* YawMotionCardView */,
+				1E05788F2C76241A001E2879 /* CardContentView.swift */,
+				E764E5472C8C259400A3CBEE /* RollMotionCard */,
+				1E05788C2C75D56A001E2879 /* YawMotionCard */,
 			);
 			path = CardDetail;
 			sourceTree = "<group>";
@@ -115,6 +118,14 @@
 				E7D427F12C4D3A7400485BB9 /* MotionManager.swift */,
 			);
 			path = Manager;
+			sourceTree = "<group>";
+		};
+		E764E5472C8C259400A3CBEE /* RollMotionCard */ = {
+			isa = PBXGroup;
+			children = (
+				E764E5482C8C272200A3CBEE /* RollMotionCardView.swift */,
+			);
+			path = RollMotionCard;
 			sourceTree = "<group>";
 		};
 		E7D427C92C4D293D00485BB9 = {
@@ -271,6 +282,7 @@
 				1E8EEE462C71FB4E0086B06F /* ListCardCell.swift in Sources */,
 				E7D427D62C4D293D00485BB9 /* WorkUpApp.swift in Sources */,
 				E7D427EF2C4D3A6300485BB9 /* NewCardView.swift in Sources */,
+				E764E5492C8C272200A3CBEE /* RollMotionCardView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

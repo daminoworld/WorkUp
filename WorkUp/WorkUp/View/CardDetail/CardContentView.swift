@@ -31,7 +31,7 @@ struct CardContentView: View {
                 }
             }
             Text("\(content)")
-                .font(.system(size: 38 , weight: .bold))
+                .font(.system(size: isAnswer ? 20 : 38 , weight: .bold))
                 .foregroundStyle(.black)
                 .lineSpacing(4)
                 .tracking(-0.4)
