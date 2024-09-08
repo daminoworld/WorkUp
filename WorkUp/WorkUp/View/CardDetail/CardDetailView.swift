@@ -81,6 +81,7 @@ struct CardDetailView: View {
                         randomMode()
                     }
                     .scrollDisabled(motionManager.isDeviceFlipped ? true : false)
+                    .scrollDisabled(motionManager.isYawRotated ? true : false)
                 }
 //                .padding(.top, motionManager.isDeviceFlipped ? 60 : 20)
                 
