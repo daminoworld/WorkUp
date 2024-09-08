@@ -33,7 +33,6 @@ struct MainCardView: View {
                 Image("MainCardImage")
                 
                 NavigationLink {
-                    //TODO: shuffledCardList 넣어서 CardDetail연결
                     CardDetailView(shuffledCardList: shuffledCardList)
                 } label: {
                     RoundedRectangle(cornerRadius: 12)
@@ -74,7 +73,6 @@ struct MainCardView: View {
             }
         }
         .frame(width: 315, height: 425)
-        
     }
 }
 
