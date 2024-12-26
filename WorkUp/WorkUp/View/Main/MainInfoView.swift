@@ -12,7 +12,8 @@ struct MainInfoView: View {
     @State private var isInformationFirst: Bool = true
     var body: some View {
         ZStack {
-            Image(isInformationFirst ? "information1" : "information2")
+            Image(isInformationFirst ? "infoFirstPage" : "infoSecondPage")
+                .resizable()
                 .ignoresSafeArea()
             VStack {
                 HStack {
