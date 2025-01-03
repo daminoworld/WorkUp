@@ -30,6 +30,9 @@ struct NewCardView: View {
             
             ScrollView {
                 VStack {
+                    Spacer()
+                        .frame(height: 35)
+                    
                     VStack(alignment:.leading) {
                         VStack(alignment: .leading, spacing: 15){
                             Text("카드를")
