@@ -34,7 +34,7 @@ struct CardDetailView: View {
             VStack(spacing: 0) {
                 
                 setHeaderView()
-
+                
                 GeometryReader { geo in
                     ScrollView(.horizontal, showsIndicators: false) {
                         LazyHStack(spacing: 0) {
@@ -69,6 +69,7 @@ struct CardDetailView: View {
                     .scrollDisabled(motionManager.isDeviceFlipped ? true : false)
                     .scrollDisabled(motionManager.isYawRotated ? true : false)
                 }
+
                
                 if motionMode == .top && motionManager.isDeviceFlipped && !motionManager.isDeviceFlippedFor5Seconds {
                     VStack(spacing: 0) {
@@ -80,7 +81,7 @@ struct CardDetailView: View {
                             .multilineTextAlignment(.center)
                             .padding(.top, 19)
                     }
-                    .padding(.bottom, 50)
+                    .offset(y: -50)
                     
                 } else if motionMode == .top && motionManager.isDeviceFlipped && motionManager.isDeviceFlippedFor5Seconds {
                     
@@ -89,14 +90,14 @@ struct CardDetailView: View {
                         .scaledToFit()
                         .frame(width: 106, height: 155)
                         .rotationEffect(.degrees(180.0))
-                        .padding(.top, 52)
+                        .offset(y: -50)
                 }
             }
-
             .navigationBarBackButtonHidden(true)
             .ignoresSafeArea(.all, edges: .bottom)
             .onAppear {
                 shuffledCardList = getShuffledCardList()
+                randomMode()
             }
         }
     }
