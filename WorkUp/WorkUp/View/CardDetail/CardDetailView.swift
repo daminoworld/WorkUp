@@ -19,7 +19,6 @@ struct CardDetailView: View {
     @State var quizModel: String = "나는 누굴까요?"
     @State private var showAlert = false
     @State var currentIndex = 0
-    @State var isLastQuiz = false
     @State private var dragOffset: CGSize = .zero // 드래그 오프셋 상태 변수
     @State private var scrollId: Int? = 0
     @State var motionMode: MotionMode = .top
@@ -33,22 +32,9 @@ struct CardDetailView: View {
                 .ignoresSafeArea(.all)
             
             VStack(spacing: 0) {
-                HStack {
-                    Spacer()
-                    
-                    Button(action: {
-                        self.presentationMode.wrappedValue.dismiss()
-                    }, label: {
-                        Image(isLastQuiz ? "Activeclose" : "Close")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 35, height: 35)
-                    })
-                    .padding(.trailing, 23)
-                }
                 
                 setHeaderView()
-                
+
                 GeometryReader { geo in
                     ScrollView(.horizontal, showsIndicators: false) {
                         LazyHStack(spacing: 0) {
@@ -57,11 +43,11 @@ struct CardDetailView: View {
                                     RollMotionCardView(motionManager: motionManager, currentIndex: $currentIndex, shuffledCardList: shuffledCardList)
                                        
                                 } else {
-                                    YawMotionCardView(motionManager: motionManager, motionMode: $motionMode, currentIndex: $currentIndex, shuffledCardList: shuffledCardList)
-                                        .padding(.top, 21.75)
+                                    YawMotionCardView(motionManager: motionManager, currentIndex: $currentIndex, shuffledCardList: shuffledCardList, isLeft: motionMode == .left ? true : false)
                                 }
                             }
                             .frame(width: 315, height: 424)
+                            .padding(.bottom, 50)
                             .padding(.horizontal, (geo.size.width - 315) / 2)
                             .scrollTransition(.interactive, axis: .horizontal) { content, phase in
                                 content
@@ -83,7 +69,7 @@ struct CardDetailView: View {
                     .scrollDisabled(motionManager.isDeviceFlipped ? true : false)
                     .scrollDisabled(motionManager.isYawRotated ? true : false)
                 }
-                
+               
                 if motionMode == .top && motionManager.isDeviceFlipped && !motionManager.isDeviceFlippedFor5Seconds {
                     VStack(spacing: 0) {
                         Text("내용 확인하기")
@@ -106,40 +92,40 @@ struct CardDetailView: View {
                         .padding(.top, 52)
                 }
             }
+
             .navigationBarBackButtonHidden(true)
             .ignoresSafeArea(.all, edges: .bottom)
             .onAppear {
-                if shuffledCardList.count == 1{
-                    isLastQuiz = true
-                }
-                
-                
+                shuffledCardList = getShuffledCardList()
             }
-        }
-        .onAppear {
-            shuffledCardList = getShuffledCardList()
         }
     }
     
     @ViewBuilder
     func setHeaderView() -> some View {
-        if motionMode == .top {
-            VStack(spacing: 0) {
-                if !motionManager.isDeviceFlipped {
-                    Image("Arrow")
+        ZStack(alignment: .top) {
+            HStack {
+                Spacer()
+                
+                Button(action: {
+                    self.presentationMode.wrappedValue.dismiss()
+                }, label: {
+                    Image("Close")
                         .resizable()
                         .scaledToFit()
-                        .frame(width: 106, height: 155)
-                        .background {
-                            Color.clear
-                        }
-                        .padding(.bottom, 20)
-                    
-                    if isLastQuiz {
-                        Text("모든 카드가 끝났습니다")
-                            .foregroundStyle(isLastQuiz ? Color("MainColor") :.white)
-                            .padding(.bottom, 20)
-                    } else {
+                        .frame(width: 35, height: 35)
+                })
+                .padding(.trailing, 23)
+            }
+            
+            if motionMode == .top {
+                VStack(spacing: 0) {
+                    if !motionManager.isDeviceFlipped {
+                        Image("Arrow")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 106, height: 155)
+
                         Group {
                             Text("고개를")
                                 .font(.system(size: 18, weight: .regular))
@@ -148,28 +134,28 @@ struct CardDetailView: View {
                             + Text(" 내용을 확인")
                                 .font(.system(size: 18, weight: .regular))
                         }
-                        .foregroundStyle(isLastQuiz ? Color("MainColor") :.white)
-                        .padding(.bottom, 20)
+                        .foregroundStyle(.white)
+                        .offset(y: 24)
                     }
                 }
-            }
-        } else {
-            VStack(spacing: 0) {
-                Image(motionMode == .left ? "leftArrow" : "rightArrow")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 177, height: 95)
-                    .padding(.bottom, 15.82)
-                Group {
-                    Text("고개를")
-                        .font(.system(size: 18, weight: .regular))
-                    + Text(" 꺽어서")
-                        .font(.system(size: 18, weight: .bold))
-                    + Text((motionMode == .left && motionManager.xAcceleration < -0.15) || motionMode == .right && motionManager.xAcceleration > 0.15 ? " 제목으로 돌아가기" :" 내용을 확인")
-                        .font(.system(size: 18, weight: .regular))
+            } else {
+                VStack(spacing: 0) {
+                    Image(motionMode == .left ? "leftArrow" : "rightArrow")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 184, height: 95)
+                    Group {
+                        Text("고개를")
+                            .font(.system(size: 18, weight: .regular))
+                        + Text(" 꺽어서")
+                            .font(.system(size: 18, weight: .bold))
+                        + Text((motionMode == .left && motionManager.xAcceleration < -0.15) || motionMode == .right && motionManager.xAcceleration > 0.15 ? " 제목으로 돌아가기" :" 내용을 확인")
+                            .font(.system(size: 18, weight: .regular))
+                    }
+                    .foregroundStyle(.white)
+                    .padding(.top, 44)
+                    .offset(y: 24)
                 }
-                .foregroundStyle(.white)
-                .padding(.top, 44.4)
             }
         }
     }
