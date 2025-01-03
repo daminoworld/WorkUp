@@ -43,22 +43,13 @@ struct MainView: View {
                     if newCards.isEmpty {
                         EmptyCardView()
                     }else {
-                        MainCardView(shuffledCardList: shuffledCardList())
+                        MainCardView()
                     }
                     Spacer()
                 }
                 
             }
         }
-    }
-    
-    private func shuffledCardList() -> [NewCard] {
-        var newShuffledCardList: [NewCard] = []
-        newCards.forEach { card in
-            newShuffledCardList.append(card)
-        }
-        newShuffledCardList.shuffle()
-        return newShuffledCardList
     }
 }
 

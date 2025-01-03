@@ -20,10 +20,10 @@ struct CardDetailView: View {
     @State private var showAlert = false
     @State var currentIndex = 0
     @State var isLastQuiz = false
-    var shuffledCardList: [NewCard] = Array(repeating: NewCard(question: "", answer: ""), count: 100)
     @State private var dragOffset: CGSize = .zero // 드래그 오프셋 상태 변수
     @State private var scrollId: Int? = 0
     @State var motionMode: MotionMode = .top
+    @State var shuffledCardList: [NewCard] = []
     
     var body: some View {
         ZStack(alignment: .top) {
@@ -117,6 +117,9 @@ struct CardDetailView: View {
                 
             }
         }
+        .onAppear {
+            shuffledCardList = getShuffledCardList()
+        }
     }
     
     @ViewBuilder
@@ -176,6 +179,14 @@ struct CardDetailView: View {
         motionMode = MotionMode.allCases.randomElement()!
     }
     
+    private func getShuffledCardList() -> [NewCard] {
+        var newShuffledCardList: [NewCard] = []
+        newCards.forEach { card in
+            newShuffledCardList.append(card)
+        }
+        newShuffledCardList.shuffle()
+        return newShuffledCardList
+    }
 }
 
 #Preview {
