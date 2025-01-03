@@ -55,15 +55,14 @@ struct CardDetailView: View {
                             ForEach(shuffledCardList.indices, id: \.self) { idx in
                                 if motionMode == .top {
                                     RollMotionCardView(motionManager: motionManager, currentIndex: $currentIndex, shuffledCardList: shuffledCardList)
-                                        .frame(width: 315, height: 424)
+                                       
                                 } else {
                                     YawMotionCardView(motionManager: motionManager, motionMode: $motionMode, currentIndex: $currentIndex, shuffledCardList: shuffledCardList)
-                                        .frame(width: 315, height: 424)
                                         .padding(.top, 21.75)
                                 }
                             }
-                            .offset(x: -20)
-                            .safeAreaPadding(.horizontal, 60)
+                            .frame(width: 315, height: 424)
+                            .padding(.horizontal, (geo.size.width - 315) / 2)
                             .scrollTransition(.interactive, axis: .horizontal) { content, phase in
                                 content
                                     .opacity(phase.isIdentity ? 1 : 0.6)
@@ -71,9 +70,10 @@ struct CardDetailView: View {
                                 
                             }
                         }
+                        // lazyHStack
                         .scrollTargetLayout()
                     }
-                    .scrollTargetBehavior(.viewAligned)
+                    .scrollTargetBehavior(.paging)
                     .scrollPosition(id: $scrollId)
                     .onChange(of: scrollId) { oldValue, newValue in
                         guard let newValue else { return }
@@ -83,7 +83,6 @@ struct CardDetailView: View {
                     .scrollDisabled(motionManager.isDeviceFlipped ? true : false)
                     .scrollDisabled(motionManager.isYawRotated ? true : false)
                 }
-//                .padding(.top, motionManager.isDeviceFlipped ? 60 : 20)
                 
                 if motionMode == .top && motionManager.isDeviceFlipped && !motionManager.isDeviceFlippedFor5Seconds {
                     VStack(spacing: 0) {
@@ -166,7 +165,7 @@ struct CardDetailView: View {
                         .font(.system(size: 18, weight: .regular))
                     + Text(" 꺽어서")
                         .font(.system(size: 18, weight: .bold))
-                    + Text((motionMode == .left && motionManager.xAcceleration < -0.15) || motionMode == .right && motionManager.xAcceleration > 0.15 ? "제목으로 돌아가기" :" 내용을 확인")
+                    + Text((motionMode == .left && motionManager.xAcceleration < -0.15) || motionMode == .right && motionManager.xAcceleration > 0.15 ? " 제목으로 돌아가기" :" 내용을 확인")
                         .font(.system(size: 18, weight: .regular))
                 }
                 .foregroundStyle(.white)
