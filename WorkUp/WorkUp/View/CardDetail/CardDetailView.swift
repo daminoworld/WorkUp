@@ -31,6 +31,20 @@ struct CardDetailView: View {
             Color.black
                 .ignoresSafeArea(.all)
             
+            HStack {
+                Spacer()
+                
+                Button(action: {
+                    self.presentationMode.wrappedValue.dismiss()
+                }, label: {
+                    Image("Close")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 35, height: 35)
+                })
+                .padding(.trailing, 23)
+            }
+            
             VStack(spacing: 0) {
                 
                 setHeaderView()
@@ -41,7 +55,7 @@ struct CardDetailView: View {
                             ForEach(shuffledCardList.indices, id: \.self) { idx in
                                 if motionMode == .top {
                                     RollMotionCardView(motionManager: motionManager, currentIndex: $currentIndex, shuffledCardList: shuffledCardList)
-                                       
+                                    
                                 } else {
                                     YawMotionCardView(motionManager: motionManager, currentIndex: $currentIndex, shuffledCardList: shuffledCardList, isLeft: motionMode == .left ? true : false)
                                 }
@@ -69,8 +83,8 @@ struct CardDetailView: View {
                     .scrollDisabled(motionManager.isDeviceFlipped ? true : false)
                     .scrollDisabled(motionManager.isYawRotated ? true : false)
                 }
-
-               
+                
+                
                 if motionMode == .top && motionManager.isDeviceFlipped && !motionManager.isDeviceFlippedFor5Seconds {
                     VStack(spacing: 0) {
                         Text("내용 확인하기")
@@ -81,7 +95,7 @@ struct CardDetailView: View {
                             .multilineTextAlignment(.center)
                             .padding(.top, 19)
                     }
-                    .offset(y: -50)
+                    .offset(y: -80)
                     
                 } else if motionMode == .top && motionManager.isDeviceFlipped && motionManager.isDeviceFlippedFor5Seconds {
                     
@@ -90,7 +104,7 @@ struct CardDetailView: View {
                         .scaledToFit()
                         .frame(width: 106, height: 155)
                         .rotationEffect(.degrees(180.0))
-                        .offset(y: -50)
+                        .offset(y: -80)
                 }
             }
             .navigationBarBackButtonHidden(true)
@@ -104,59 +118,43 @@ struct CardDetailView: View {
     
     @ViewBuilder
     func setHeaderView() -> some View {
-        ZStack(alignment: .top) {
-            HStack {
-                Spacer()
-                
-                Button(action: {
-                    self.presentationMode.wrappedValue.dismiss()
-                }, label: {
-                    Image("Close")
+        if motionMode == .top {
+            VStack(spacing: 0) {
+                if !motionManager.isDeviceFlipped {
+                    Image("Arrow")
                         .resizable()
                         .scaledToFit()
-                        .frame(width: 35, height: 35)
-                })
-                .padding(.trailing, 23)
-            }
-            
-            if motionMode == .top {
-                VStack(spacing: 0) {
-                    if !motionManager.isDeviceFlipped {
-                        Image("Arrow")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 106, height: 155)
-
-                        Group {
-                            Text("고개를")
-                                .font(.system(size: 18, weight: .regular))
-                            + Text(" 들어서")
-                                .font(.system(size: 18, weight: .bold))
-                            + Text(" 내용을 확인")
-                                .font(.system(size: 18, weight: .regular))
-                        }
-                        .foregroundStyle(.white)
-                        .offset(y: 24)
-                    }
-                }
-            } else {
-                VStack(spacing: 0) {
-                    Image(motionMode == .left ? "leftArrow" : "rightArrow")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 184, height: 95)
+                        .frame(width: 106, height: 155)
+                    
                     Group {
                         Text("고개를")
                             .font(.system(size: 18, weight: .regular))
-                        + Text(" 꺽어서")
+                        + Text(" 들어서")
                             .font(.system(size: 18, weight: .bold))
-                        + Text((motionMode == .left && motionManager.xAcceleration < -0.15) || motionMode == .right && motionManager.xAcceleration > 0.15 ? " 제목으로 돌아가기" :" 내용을 확인")
+                        + Text(" 내용을 확인")
                             .font(.system(size: 18, weight: .regular))
                     }
                     .foregroundStyle(.white)
-                    .padding(.top, 44)
                     .offset(y: 24)
                 }
+            }
+        } else {
+            VStack(spacing: 0) {
+                Image(motionMode == .left ? "leftArrow" : "rightArrow")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 184, height: 95)
+                Group {
+                    Text("고개를")
+                        .font(.system(size: 18, weight: .regular))
+                    + Text(" 꺽어서")
+                        .font(.system(size: 18, weight: .bold))
+                    + Text((motionMode == .left && motionManager.xAcceleration < -0.15) || motionMode == .right && motionManager.xAcceleration > 0.15 ? " 제목으로 돌아가기" :" 내용을 확인")
+                        .font(.system(size: 18, weight: .regular))
+                }
+                .foregroundStyle(.white)
+                .padding(.top, 44)
+                .offset(y: 24)
             }
         }
     }
