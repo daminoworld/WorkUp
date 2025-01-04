@@ -9,10 +9,9 @@ import SwiftUI
 
 struct YawMotionCardView: View {
     @ObservedObject var motionManager: MotionManager
-    @Binding var motionMode: MotionMode
     @Binding var currentIndex: Int
     @State var shuffledCardList: [NewCard]
-    @State var isLeft = true
+    var isLeft: Bool
 
     var rotationAngle: Double {
         let maxAngle = isLeft ? -25.0 : 25.0
@@ -38,13 +37,6 @@ struct YawMotionCardView: View {
             questionCard
                 .opacity(abs(rotationAngle) > 5 ? 1 : 0.3)
                 .animation(.easeInOut, value: motionManager.xAcceleration)
-        }
-        .onChange(of: motionMode) {
-            if motionMode == .left {
-                isLeft = true
-            } else {
-                isLeft = false
-            }
         }
     }
     
