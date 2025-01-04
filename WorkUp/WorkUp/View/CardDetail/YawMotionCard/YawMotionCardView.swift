@@ -15,7 +15,7 @@ struct YawMotionCardView: View {
     @State var isLeft = true
 
     var rotationAngle: Double {
-        let maxAngle = isLeft ? -25.0 : 25.0
+        let maxAngle = isLeft ? -35.0 : 35.0
         let minAcceleration = isLeft ? motionManager.minXAcceleration : motionManager.maxXAcceleration
         var normalizedAcceleration = motionManager.xAcceleration > 0 ? 0 : motionManager.xAcceleration
 
@@ -29,7 +29,7 @@ struct YawMotionCardView: View {
 
     var rotationOffset: (Double, Double) {
         let minX = isLeft ? -170.0 : 170.0
-        let minY = isLeft ? 30.0 : -30.0
+        let minY = -15.0
         let minAcceleration = isLeft ? motionManager.minXAcceleration : motionManager.maxXAcceleration
         var normalizedAcceleration = motionManager.xAcceleration > 0 ? 0 : motionManager.xAcceleration
         if !isLeft {
