@@ -34,6 +34,9 @@ struct MainView: View {
                             MainInfoView()
                         } label: {
                             Image("Info")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 35, height: 35)
                         }
                     }
                     .padding(.top, 36)
