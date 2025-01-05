@@ -27,7 +27,7 @@ struct YawMotionCardView: View {
     }
 
     var rotationOffset: (Double, Double) {
-        let minX = isLeft ? -170.0 : 170.0
+        let minX = isLeft ? -100.0 : 100.0
         let minY = -15.0
         let minAcceleration = isLeft ? motionManager.minXAcceleration : motionManager.maxXAcceleration
         var normalizedAcceleration = motionManager.xAcceleration > 0 ? 0 : motionManager.xAcceleration
@@ -45,6 +45,7 @@ struct YawMotionCardView: View {
         ZStack {
             answerCard
                 .rotationEffect(.degrees(rotationAngle), anchor: .bottom)
+                .offset(x: rotationOffset.0 , y: rotationOffset.1)
                 .opacity(abs(rotationAngle) > 5 ? 0.3 : 1)
                 .zIndex(abs(rotationAngle) > 5 ? 0 : 1)
                 .animation(.easeInOut, value: motionManager.xAcceleration)
