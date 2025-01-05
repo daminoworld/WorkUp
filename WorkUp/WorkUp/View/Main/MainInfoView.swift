@@ -12,23 +12,13 @@ struct MainInfoView: View {
     @State private var isInformationFirst: Bool = true
     var body: some View {
         ZStack {
-            Image(isInformationFirst ? "information1" : "information2")
+            Image(isInformationFirst ? "infoFirstPage" : "infoSecondPage")
+                .resizable()
                 .ignoresSafeArea()
-            VStack {
+            
+            VStack(spacing: 0) {
+                Spacer()
                 HStack {
-                    Button(action: {
-                        if !isInformationFirst {
-                            isInformationFirst = true
-                        }else {
-                            dismiss()
-                        }
-                    }, label: {
-                        Image(systemName: "chevron.left")
-                            .resizable()
-                            .frame(width: 13, height: 22)
-                            .foregroundStyle(Color(hex: isInformationFirst ? "FBF8F3" : "53E7FB"))
-                    })
-                    
                     Spacer()
                     Button(action: {
                         if isInformationFirst {
@@ -37,32 +27,18 @@ struct MainInfoView: View {
                             dismiss()
                         }
                     }, label: {
-                        if isInformationFirst {
-                            Text("다음")
-                                .font(.system(size: 20))
-                                .fontWeight(.semibold)
-                                .foregroundColor(Color(hex: "3F3F3F"))
-                        } else {
-                            Text("닫기")
-                                .font(.system(size: 20))
-                                .fontWeight(.semibold)
-                                .foregroundColor(Color(hex: "53E7FB"))
-                        }
-                        
+                        Image(isInformationFirst ? "infoNextButton" : "infoCloseButton")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 82, height: 44)
                     })
-
                 }
-                .padding(.horizontal, 20)
-                .padding(.top, 50)
-                
-                Spacer()
+                .padding(.horizontal, 37)
+                .padding(.bottom, 39)
             }
-            
-            
+            .ignoresSafeArea()
         }
         .navigationBarBackButtonHidden()
-        
-
     }
 }
 

@@ -29,7 +29,7 @@ struct RollMotionCardView: View {
             if motionManager.isDeviceFlipped && !motionManager.isDeviceFlippedFor5Seconds{
                 ProgressRingView(progress: $motionManager.timeIntervalSince)
             } else if motionManager.isDeviceFlipped && motionManager.isDeviceFlippedFor5Seconds{
-                CardContentView(isAnswer: true, content: shuffledCardList[currentIndex].question, index: currentIndex, totalNum: shuffledCardList.count)
+                CardContentView(isAnswer: true, content: shuffledCardList[currentIndex].answer, index: currentIndex, totalNum: shuffledCardList.count)
             } else {
                 CardContentView(content: shuffledCardList[currentIndex].question, index: currentIndex, totalNum: shuffledCardList.count)
             }

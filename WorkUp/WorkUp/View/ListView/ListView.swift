@@ -54,7 +54,7 @@ struct ListView: View {
             Image("AddQuiz")
                 .resizable()
                 .scaledToFit()
-                .frame(width: 30, height: 30)
+                .frame(width: 35, height: 35)
         }))
         
     }

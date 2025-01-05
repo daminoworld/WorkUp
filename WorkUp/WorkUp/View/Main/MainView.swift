@@ -34,6 +34,9 @@ struct MainView: View {
                             MainInfoView()
                         } label: {
                             Image("Info")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 35, height: 35)
                         }
                     }
                     .padding(.top, 36)
@@ -43,22 +46,13 @@ struct MainView: View {
                     if newCards.isEmpty {
                         EmptyCardView()
                     }else {
-                        MainCardView(shuffledCardList: shuffledCardList())
+                        MainCardView()
                     }
                     Spacer()
                 }
                 
             }
         }
-    }
-    
-    private func shuffledCardList() -> [NewCard] {
-        var newShuffledCardList: [NewCard] = []
-        newCards.forEach { card in
-            newShuffledCardList.append(card)
-        }
-        newShuffledCardList.shuffle()
-        return newShuffledCardList
     }
 }
 

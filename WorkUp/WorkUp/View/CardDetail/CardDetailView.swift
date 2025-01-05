@@ -19,11 +19,10 @@ struct CardDetailView: View {
     @State var quizModel: String = "나는 누굴까요?"
     @State private var showAlert = false
     @State var currentIndex = 0
-    @State var isLastQuiz = false
-    var shuffledCardList: [NewCard] = Array(repeating: NewCard(question: "", answer: ""), count: 100)
     @State private var dragOffset: CGSize = .zero // 드래그 오프셋 상태 변수
     @State private var scrollId: Int? = 0
     @State var motionMode: MotionMode = .top
+    @State var shuffledCardList: [NewCard] = []
     
     var body: some View {
         ZStack(alignment: .top) {
@@ -32,20 +31,21 @@ struct CardDetailView: View {
             Color.black
                 .ignoresSafeArea(.all)
             
+            HStack {
+                Spacer()
+                
+                Button(action: {
+                    self.presentationMode.wrappedValue.dismiss()
+                }, label: {
+                    Image("Close")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 35, height: 35)
+                })
+                .padding(.trailing, 23)
+            }
+            
             VStack(spacing: 0) {
-                HStack {
-                    Spacer()
-                    
-                    Button(action: {
-                        self.presentationMode.wrappedValue.dismiss()
-                    }, label: {
-                        Image(isLastQuiz ? "Activeclose" : "Close")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 35, height: 35)
-                    })
-                    .padding(.trailing, 23)
-                }
                 
                 setHeaderView()
                 
@@ -55,15 +55,14 @@ struct CardDetailView: View {
                             ForEach(shuffledCardList.indices, id: \.self) { idx in
                                 if motionMode == .top {
                                     RollMotionCardView(motionManager: motionManager, currentIndex: $currentIndex, shuffledCardList: shuffledCardList)
-                                        .frame(width: 315, height: 424)
+                                    
                                 } else {
-                                    YawMotionCardView(motionManager: motionManager, motionMode: $motionMode, currentIndex: $currentIndex, shuffledCardList: shuffledCardList)
-                                        .frame(width: 315, height: 424)
-                                        .padding(.top, 21.75)
+                                    YawMotionCardView(motionManager: motionManager, currentIndex: $currentIndex, shuffledCardList: shuffledCardList, isLeft: motionMode == .left ? true : false)
                                 }
                             }
-                            .offset(x: -20)
-                            .safeAreaPadding(.horizontal, 60)
+                            .frame(width: 315, height: 424)
+                            .padding(.bottom, 50)
+                            .padding(.horizontal, (geo.size.width - 315) / 2)
                             .scrollTransition(.interactive, axis: .horizontal) { content, phase in
                                 content
                                     .opacity(phase.isIdentity ? 1 : 0.6)
@@ -71,9 +70,10 @@ struct CardDetailView: View {
                                 
                             }
                         }
+                        // lazyHStack
                         .scrollTargetLayout()
                     }
-                    .scrollTargetBehavior(.viewAligned)
+                    .scrollTargetBehavior(.paging)
                     .scrollPosition(id: $scrollId)
                     .onChange(of: scrollId) { oldValue, newValue in
                         guard let newValue else { return }
@@ -83,7 +83,7 @@ struct CardDetailView: View {
                     .scrollDisabled(motionManager.isDeviceFlipped ? true : false)
                     .scrollDisabled(motionManager.isYawRotated ? true : false)
                 }
-//                .padding(.top, motionManager.isDeviceFlipped ? 60 : 20)
+                
                 
                 if motionMode == .top && motionManager.isDeviceFlipped && !motionManager.isDeviceFlippedFor5Seconds {
                     VStack(spacing: 0) {
@@ -95,7 +95,7 @@ struct CardDetailView: View {
                             .multilineTextAlignment(.center)
                             .padding(.top, 19)
                     }
-                    .padding(.bottom, 50)
+                    .offset(y: -80)
                     
                 } else if motionMode == .top && motionManager.isDeviceFlipped && motionManager.isDeviceFlippedFor5Seconds {
                     
@@ -104,17 +104,14 @@ struct CardDetailView: View {
                         .scaledToFit()
                         .frame(width: 106, height: 155)
                         .rotationEffect(.degrees(180.0))
-                        .padding(.top, 52)
+                        .offset(y: -80)
                 }
             }
             .navigationBarBackButtonHidden(true)
             .ignoresSafeArea(.all, edges: .bottom)
             .onAppear {
-                if shuffledCardList.count == 1{
-                    isLastQuiz = true
-                }
-                
-                
+                shuffledCardList = getShuffledCardList()
+                randomMode()
             }
         }
     }
@@ -128,27 +125,17 @@ struct CardDetailView: View {
                         .resizable()
                         .scaledToFit()
                         .frame(width: 106, height: 155)
-                        .background {
-                            Color.clear
-                        }
-                        .padding(.bottom, 20)
                     
-                    if isLastQuiz {
-                        Text("모든 카드가 끝났습니다")
-                            .foregroundStyle(isLastQuiz ? Color("MainColor") :.white)
-                            .padding(.bottom, 20)
-                    } else {
-                        Group {
-                            Text("고개를")
-                                .font(.system(size: 18, weight: .regular))
-                            + Text(" 들어서")
-                                .font(.system(size: 18, weight: .bold))
-                            + Text(" 내용을 확인")
-                                .font(.system(size: 18, weight: .regular))
-                        }
-                        .foregroundStyle(isLastQuiz ? Color("MainColor") :.white)
-                        .padding(.bottom, 20)
+                    Group {
+                        Text("고개를")
+                            .font(.system(size: 18, weight: .regular))
+                        + Text(" 들어서")
+                            .font(.system(size: 18, weight: .bold))
+                        + Text(" 내용을 확인")
+                            .font(.system(size: 18, weight: .regular))
                     }
+                    .foregroundStyle(.white)
+                    .offset(y: 24)
                 }
             }
         } else {
@@ -156,18 +143,18 @@ struct CardDetailView: View {
                 Image(motionMode == .left ? "leftArrow" : "rightArrow")
                     .resizable()
                     .scaledToFit()
-                    .frame(width: 177, height: 95)
-                    .padding(.bottom, 15.82)
+                    .frame(width: 184, height: 95)
                 Group {
                     Text("고개를")
                         .font(.system(size: 18, weight: .regular))
                     + Text(" 꺽어서")
                         .font(.system(size: 18, weight: .bold))
-                    + Text((motionMode == .left && motionManager.xAcceleration < -0.15) || motionMode == .right && motionManager.xAcceleration > 0.15 ? "제목으로 돌아가기" :" 내용을 확인")
+                    + Text((motionMode == .left && motionManager.xAcceleration < -0.15) || motionMode == .right && motionManager.xAcceleration > 0.15 ? " 제목으로 돌아가기" :" 내용을 확인")
                         .font(.system(size: 18, weight: .regular))
                 }
                 .foregroundStyle(.white)
-                .padding(.top, 44.4)
+                .padding(.top, 44)
+                .offset(y: 24)
             }
         }
     }
@@ -176,6 +163,14 @@ struct CardDetailView: View {
         motionMode = MotionMode.allCases.randomElement()!
     }
     
+    private func getShuffledCardList() -> [NewCard] {
+        var newShuffledCardList: [NewCard] = []
+        newCards.forEach { card in
+            newShuffledCardList.append(card)
+        }
+        newShuffledCardList.shuffle()
+        return newShuffledCardList
+    }
 }
 
 #Preview {

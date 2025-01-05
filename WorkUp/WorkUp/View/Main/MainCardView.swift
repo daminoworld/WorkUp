@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct MainCardView: View {
-    var shuffledCardList: [NewCard] = []
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 13)
@@ -33,7 +32,7 @@ struct MainCardView: View {
                 Image("MainCardImage")
                 
                 NavigationLink {
-                    CardDetailView(shuffledCardList: shuffledCardList)
+                    CardDetailView()
                 } label: {
                     RoundedRectangle(cornerRadius: 12)
                         .fill(Color.main)
