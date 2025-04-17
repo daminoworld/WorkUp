@@ -14,6 +14,7 @@
 		1E11A84D2DB115DE00A3039E /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 1E11A84C2DB115DE00A3039E /* FirebaseAnalytics */; };
 		1E11A84F2DB115DE00A3039E /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 1E11A84E2DB115DE00A3039E /* FirebaseCore */; };
 		1E11A8512DB1176F00A3039E /* Appdelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E11A8502DB1176700A3039E /* Appdelegate.swift */; };
+		1E11A8532DB11CE100A3039E /* FirebaseAnalyticsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E11A8522DB11CD000A3039E /* FirebaseAnalyticsManager.swift */; };
 		1E8EEE442C71E7610086B06F /* ListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E8EEE432C71E7610086B06F /* ListView.swift */; };
 		1E8EEE462C71FB4E0086B06F /* ListCardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E8EEE452C71FB4E0086B06F /* ListCardCell.swift */; };
 		E764E5492C8C272200A3CBEE /* RollMotionCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E764E5482C8C272200A3CBEE /* RollMotionCardView.swift */; };
@@ -39,6 +40,7 @@
 		1E0578922C762ABD001E2879 /* ProgressRingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressRingView.swift; sourceTree = "<group>"; };
 		1E11A8492DB114C200A3039E /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		1E11A8502DB1176700A3039E /* Appdelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Appdelegate.swift; sourceTree = "<group>"; };
+		1E11A8522DB11CD000A3039E /* FirebaseAnalyticsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAnalyticsManager.swift; sourceTree = "<group>"; };
 		1E8EEE432C71E7610086B06F /* ListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListView.swift; sourceTree = "<group>"; };
 		1E8EEE452C71FB4E0086B06F /* ListCardCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCardCell.swift; sourceTree = "<group>"; };
 		E764E5482C8C272200A3CBEE /* RollMotionCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RollMotionCardView.swift; sourceTree = "<group>"; };
@@ -124,6 +126,7 @@
 			isa = PBXGroup;
 			children = (
 				E7D427F12C4D3A7400485BB9 /* MotionManager.swift */,
+				1E11A8522DB11CD000A3039E /* FirebaseAnalyticsManager.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -289,6 +292,7 @@
 				E7D427F02C4D3A6300485BB9 /* MainCardView.swift in Sources */,
 				1E0578932C762ABD001E2879 /* ProgressRingView.swift in Sources */,
 				E7D427EB2C4D3A6300485BB9 /* MainInfoView.swift in Sources */,
+				1E11A8532DB11CE100A3039E /* FirebaseAnalyticsManager.swift in Sources */,
 				E7D427F32C4D3A7400485BB9 /* MotionManager.swift in Sources */,
 				E7D427FB2C4D3A9800485BB9 /* View+.swift in Sources */,
 				E7D427EE2C4D3A6300485BB9 /* CardDetailView.swift in Sources */,

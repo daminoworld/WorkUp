@@ -112,6 +112,10 @@ struct CardDetailView: View {
             .onAppear {
                 shuffledCardList = getShuffledCardList()
                 randomMode()
+                FirebaseAnalyticsManager.shared.startScreenTimer()
+            }
+            .onDisappear {
+                FirebaseAnalyticsManager.shared.endScreenTimer(screenName: "카드보기")
             }
         }
     }
