@@ -13,6 +13,7 @@
 		1E11A84A2DB114C200A3039E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1E11A8492DB114C200A3039E /* GoogleService-Info.plist */; };
 		1E11A84D2DB115DE00A3039E /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 1E11A84C2DB115DE00A3039E /* FirebaseAnalytics */; };
 		1E11A84F2DB115DE00A3039E /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 1E11A84E2DB115DE00A3039E /* FirebaseCore */; };
+		1E11A8512DB1176F00A3039E /* Appdelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E11A8502DB1176700A3039E /* Appdelegate.swift */; };
 		1E8EEE442C71E7610086B06F /* ListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E8EEE432C71E7610086B06F /* ListView.swift */; };
 		1E8EEE462C71FB4E0086B06F /* ListCardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E8EEE452C71FB4E0086B06F /* ListCardCell.swift */; };
 		E764E5492C8C272200A3CBEE /* RollMotionCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E764E5482C8C272200A3CBEE /* RollMotionCardView.swift */; };
@@ -37,6 +38,7 @@
 		1E05788F2C76241A001E2879 /* CardContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardContentView.swift; sourceTree = "<group>"; };
 		1E0578922C762ABD001E2879 /* ProgressRingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressRingView.swift; sourceTree = "<group>"; };
 		1E11A8492DB114C200A3039E /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		1E11A8502DB1176700A3039E /* Appdelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Appdelegate.swift; sourceTree = "<group>"; };
 		1E8EEE432C71E7610086B06F /* ListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListView.swift; sourceTree = "<group>"; };
 		1E8EEE452C71FB4E0086B06F /* ListCardCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCardCell.swift; sourceTree = "<group>"; };
 		E764E5482C8C272200A3CBEE /* RollMotionCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RollMotionCardView.swift; sourceTree = "<group>"; };
@@ -154,6 +156,7 @@
 			isa = PBXGroup;
 			children = (
 				E7D427D52C4D293D00485BB9 /* WorkUpApp.swift */,
+				1E11A8502DB1176700A3039E /* Appdelegate.swift */,
 				E764E5462C8C240300A3CBEE /* Manager */,
 				E7D427E42C4D3A5400485BB9 /* Model */,
 				E7D427E32C4D3A4400485BB9 /* View */,
@@ -291,6 +294,7 @@
 				E7D427EE2C4D3A6300485BB9 /* CardDetailView.swift in Sources */,
 				E7D427EC2C4D3A6300485BB9 /* EmptyCardView.swift in Sources */,
 				1E8EEE462C71FB4E0086B06F /* ListCardCell.swift in Sources */,
+				1E11A8512DB1176F00A3039E /* Appdelegate.swift in Sources */,
 				E7D427D62C4D293D00485BB9 /* WorkUpApp.swift in Sources */,
 				E7D427EF2C4D3A6300485BB9 /* NewCardView.swift in Sources */,
 				E764E5492C8C272200A3CBEE /* RollMotionCardView.swift in Sources */,
